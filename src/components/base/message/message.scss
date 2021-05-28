@@ -1,0 +1,10 @@
+.message {
+    padding: 10px;
+    color: $labelPrimary;
+    background: $message;
+    border-radius: 0px 40px 40px 40px;
+
+    &__self {
+        background: $messageSelf;
+    }
+}

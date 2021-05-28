@@ -1,0 +1,36 @@
+@import '/variables.scss';
+@import '/common.scss';
+
+.chat-person {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    width: 100%;
+    border: 1px solid #515158;
+    padding: 10px 20px;
+
+    &__self {
+        border-bottom: 1px solid $btnPrimary;
+    }
+
+    &__friend-info {
+        display: flex;
+
+        &__label {
+            @extend .self-align-center;
+
+            margin-left: .8rem;
+            font-size: 1rem;
+            color: $labelPrimary;
+        }
+    }
+
+    &__btn-block {
+        @extend .self-align-center;
+    }
+
+    &--active {
+        background-color: $backgroundPrimary;
+    }
+}

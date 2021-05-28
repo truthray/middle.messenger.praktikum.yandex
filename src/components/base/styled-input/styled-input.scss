@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+.styled-input {
+    padding: 20px 10px;
+    background: #1F1D15;
+    border-radius: 20px;
+
+    &__label {
+        color: $labelPrimary;
+    }
+
+    &__input {
+        color: $inputPrimary;
+    }
+}
