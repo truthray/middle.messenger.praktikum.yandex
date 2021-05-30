@@ -3,11 +3,15 @@ include /components/base/styled-input/styled-input.pug
 include /components/base/styled-btn/styled-btn.pug
 
 script.
-    function signIn() {
-        window.location = '/main.html'
+    window.signIn = function() {
+        const login = document.getElementById('Логин').value
+        const password = document.getElementById('Пароль').value
+        console.log(`Логин: ${login}, пароль: ${password}`)
+        
+        window.location = '/'
     }
 
-    function redirectToSignUp() {
+    window.redirectToSignUp = function() {
         window.location = '/signup.html'
     }
 

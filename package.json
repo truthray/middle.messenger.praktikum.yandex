@@ -5,8 +5,8 @@
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main. Название pull request может быть любое.",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/parcel src/main.pug src/signin.pug src/signup.pug src/pages/404/404.pug src/pages/50x/50x.pug",
-    "build": "./node_modules/.bin/parcel build src/*.pug src/signin.pug src/signup.pug src/main.pug src/pages/404/404.pug src/pages/50x/50x.pug",
+    "dev": "./node_modules/.bin/parcel src/index.pug src/signin.pug src/signup.pug src/pages/404/404.pug src/pages/50x/50x.pug",
+    "build": "./node_modules/.bin/parcel build src/*.pug src/signin.pug src/signup.pug src/index.pug src/pages/404/404.pug src/pages/50x/50x.pug",
     "start": "npm run build & node index.js"
   },
   "repository": {

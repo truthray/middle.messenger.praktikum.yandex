@@ -6,7 +6,7 @@ include ../base/styled-btn/styled-btn.pug
 include ../base/avatar/avatar.pug
 
 script. 
-    function saveChanges() {
+    window.saveChanges = function() {
         const email = document.getElementById('Почта').value
         const login = document.getElementById('Логин').value
         const first_name = document.getElementById('Имя').value
@@ -17,12 +17,11 @@ script.
         console.log(`Почта: ${email}, Логин: ${login}, Имя: ${first_name}, Фамилия: ${second_name}, Телефон: ${phone}, Новый пароль: ${new_password}, Старый пароль: ${old_password}`)
     }
 
-    function signOut() {
+    window.signOut = function() {
         window.location = '/signin.html'
     }
 
-    function onAvatarClick() {
-        console.log(document.getElementById('avatar_input'))
+    window.onAvatarClick = function() {
         document.getElementById('avatar_input').click()
     }
 

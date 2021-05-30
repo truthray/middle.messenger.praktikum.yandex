@@ -5,8 +5,8 @@ include /components/base/styled-input/styled-input.pug
 include /components/base/styled-btn/styled-btn.pug
 
 script.
-    let active = null
-    function changeActive(id) {
+    window.active = null
+    window.changeActive = function(id) {
         if (active) {
             document.getElementById(active).classList.remove('chat-person--active')
         }
@@ -17,10 +17,22 @@ script.
         document.getElementById('profile-area').classList.add('hidden')
     }
 
-    function switchToProfile(id) {
+    window.switchToProfile = function(id) {
         changeActive(id)
         document.getElementById('profile-area').classList.remove('hidden')
         document.getElementById('chat-area').classList.add('hidden')
+    }
+
+    window.addPersonHandler = function() {
+        const login = document.getElementById('Логин').value
+        console.log('Добавить пользователя: ', login)
+        document.getElementById('Логин').value = ''
+    }
+
+    window.removePersonHandler = function() {
+        const login = document.getElementById('Логин').value
+        console.log('Удалить пользователя: ', login)
+        document.getElementById('Логин').value = ''
     }
 
 <!DOCTYPE html>
@@ -36,11 +48,11 @@ html(lang="ru")
                 li(onclick='switchToProfile(' + profile.id + ')', class='chat-person__self chat-person', id=profile.id)
                     +chat-person(profile, active)
                 li(style='display: flex; justify-content: space-between; padding: 10px 20px')
-                    .self-align-center 
+                    .self-align-center(onclick='removePersonHandler()')
                         +styled-control-btn('-')
                     div(class='margin: 10px')
                         +styled-input('Логин')
-                    .self-align-center 
+                    .self-align-center(onclick='addPersonHandler()')
                             +styled-control-btn('+')
                 each person in persons
                     li(onclick='changeActive(' + person.id + ')', class='chat-person', id=person.id)
