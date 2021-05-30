@@ -5,6 +5,8 @@
 - `npm run start` — запуск проекта, порт - 3000,
 
 Дизайн: https://www.figma.com/file/OZkAf54PJ4tkNExZPfNQxg/Untitled?node-id=0%3A1
+Ссылка на развернутое приложение: https://dreamy-tesla-9e76fd.netlify.app/
+Шаблонизатор: pug
 
 ### Ветка, в которой делаете задания спринта, должна называться sprint_i, где i - номер спринта. Не переименовывайте её.
 
