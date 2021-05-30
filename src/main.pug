@@ -1,0 +1,53 @@
+include /components/chat-person/chat-person.pug
+include /components/chat-area/chat-area.pug
+include /components/profile/profile.pug
+include /components/base/styled-input/styled-input.pug
+include /components/base/styled-btn/styled-btn.pug
+
+script.
+    let active = null
+    function changeActive(id) {
+        if (active) {
+            document.getElementById(active).classList.remove('chat-person--active')
+        }
+        active = id
+        document.getElementById(id).classList.add('chat-person--active')
+
+        document.getElementById('chat-area').classList.remove('hidden')
+        document.getElementById('profile-area').classList.add('hidden')
+    }
+
+    function switchToProfile(id) {
+        changeActive(id)
+        document.getElementById('profile-area').classList.remove('hidden')
+        document.getElementById('chat-area').classList.add('hidden')
+    }
+
+<!DOCTYPE html>
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Чат
+    body
+        .main-page 
+            ul.main-page__friends-list
+                li(onclick='switchToProfile(' + profile.id + ')', class='chat-person__self chat-person', id=profile.id)
+                    +chat-person(profile, active)
+                li(style='display: flex; justify-content: space-between; padding: 10px 20px')
+                    .self-align-center 
+                        +styled-control-btn('-')
+                    div(class='margin: 10px')
+                        +styled-input('Логин')
+                    .self-align-center 
+                            +styled-control-btn('+')
+                each person in persons
+                    li(onclick='changeActive(' + person.id + ')', class='chat-person', id=person.id)
+                        +chat-person(person, active)
+            .main-page__chat-area.hidden(id='chat-area')
+                +chat-area(getMessages(active))
+            .main-page__chat-area(id='profile-area')
+                +profile(profile)
+
+        script(src='./index.js')

@@ -1,0 +1,25 @@
+@import '/variables.scss';
+@import '/common.scss';
+
+.profile {
+    &__block {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+        > * {
+            width: 300px;
+        }
+    }
+
+    &__btn-block {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__image {
+        width: 125px;
+        height: 125px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}

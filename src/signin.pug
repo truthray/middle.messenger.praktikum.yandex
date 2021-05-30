@@ -1,0 +1,35 @@
+script(src='/signin.js')
+include /components/base/styled-input/styled-input.pug
+include /components/base/styled-btn/styled-btn.pug
+
+script.
+    function signIn() {
+        window.location = '/main.html'
+    }
+
+    function redirectToSignUp() {
+        window.location = '/signup.html'
+    }
+
+<!DOCTYPE html>
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Вход
+    body
+        .signin
+            div
+            .signin__form-block
+                .signin__title Вход
+                .signin__block
+                    +styled-input('Логин')
+                .signin__block
+                    +styled-input('Пароль', true)
+                .signin__block
+                    .signin__btn-block
+                        div(onclick='signIn()')
+                            +styled-btn('Войти')
+                        div(onclick='redirectToSignUp()')
+                            +styled-btn('Зарегистрироваться')

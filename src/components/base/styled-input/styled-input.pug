@@ -1,4 +1,6 @@
-.styled-input
-    .styled-input__label
-        Label
-    input.styled-input__input
+script(src='/components/base/styled-input/styled-input.js')
+    
+mixin styled-input(label, isPassword = false, value)
+    .styled-input
+        .styled-input__label #{label}
+        input.styled-input__input(id=label, value=value, type=isPassword ? 'password' : null)

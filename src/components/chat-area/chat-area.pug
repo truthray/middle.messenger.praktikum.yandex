@@ -1,0 +1,27 @@
+script(src='./components/chat-area/chat-area.js')
+
+include ../base/message/message.pug
+include ../base/avatar/avatar.pug
+include ../base/styled-btn/styled-btn.pug
+include ../base/styled-control-btn/styled-control-btn.pug
+
+script.
+    let currentDate = null
+
+mixin chat-area(messages)
+    .chat-container
+        div
+            each message in messages
+                if (message.date !== currentDate)
+                    - currentDate = message.date
+                    .message-date #{message.date}
+                .message-block(class=message.self ? 'message-block--self' : null)
+                    if (!message.self)
+                        +avatar(message.avatar)
+                    +message(message)
+                    if (message.self)
+                        +avatar(message.avatar)
+        .new-message-block
+            +styled-control-btn('+')
+            input.new-message-block__input(placeholder='Сообщение')
+            +styled-btn('Отправить')

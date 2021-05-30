@@ -1,0 +1,53 @@
+script(src='./components/profile/profile.js')
+
+include ../base/styled-control-btn/styled-control-btn.pug
+include ../base/styled-input/styled-input.pug
+include ../base/styled-btn/styled-btn.pug
+include ../base/avatar/avatar.pug
+
+script. 
+    function saveChanges() {
+        const email = document.getElementById('Почта').value
+        const login = document.getElementById('Логин').value
+        const first_name = document.getElementById('Имя').value
+        const second_name = document.getElementById('Фамилия').value
+        const phone = document.getElementById('Телефон').value
+        const new_password = document.getElementById('Новый пароль').value
+        const old_password = document.getElementById('Старый пароль').value
+        console.log(`Почта: ${email}, Логин: ${login}, Имя: ${first_name}, Фамилия: ${second_name}, Телефон: ${phone}, Новый пароль: ${new_password}, Старый пароль: ${old_password}`)
+    }
+
+    function signOut() {
+        window.location = '/signin.html'
+    }
+
+    function onAvatarClick() {
+        console.log(document.getElementById('avatar_input'))
+        document.getElementById('avatar_input').click()
+    }
+
+mixin profile(person)
+    .profile 
+        .profile__block
+            img.profile__image(src=person.avatar, onclick='onAvatarClick()')
+        .profile__block
+            +styled-input('Почта', false, person.email)
+        .profile__block
+            +styled-input('Логин', false, person.login)
+        .profile__block
+            +styled-input('Имя', false, person.first_name)
+        .profile__block
+            +styled-input('Фамилия', false, person.second_name)
+        .profile__block
+            +styled-input('Телефон', false, person.phone)
+        .profile__block
+            +styled-input('Новый пароль', true, '')
+        .profile__block
+            +styled-input('Старый пароль', true, '')
+        .profile__block
+            .profile__btn-block
+                div(onclick='saveChanges()')
+                    +styled-btn('Сохранить изменения')
+                div(onclick='signOut()')
+                    +styled-btn('Выйти')
+        input(id='avatar_input', style="display: none", type='file')

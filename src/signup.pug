@@ -1,0 +1,45 @@
+script(src='./signup.js')
+include /components/base/styled-input/styled-input.pug
+include /components/base/styled-btn/styled-btn.pug
+
+script.
+    function signUp() {
+        window.location = '/'
+    }
+
+    function redirectToSignIn() {
+        window.location = '/signin.html'
+    }
+
+<!DOCTYPE html>
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Вход
+    body
+        .signup
+            div
+            .signup__form-block
+                .signup__title Регистрация
+                .signup__block
+                    +styled-input('Почта')
+                .signup__block
+                    +styled-input('Логин')
+                .signup__block
+                    +styled-input('Имя')
+                .signup__block
+                    +styled-input('Фамилия')
+                .signup__block
+                    +styled-input('Телефон')
+                .signup__block
+                    +styled-input('Пароль', true, '')
+                .signup__block
+                    +styled-input('Пароль (еще раз)', true, '')
+                .signup__block
+                    .signup__btn-block
+                        div(onclick='signUp()')
+                            +styled-btn('Зарегистрироваться')
+                        div(onclick='redirectToSignIn()')
+                            +styled-btn('Войти')
