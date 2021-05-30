@@ -4,6 +4,9 @@ const path = require('path')
 
 app.use(express.static('./dist/'))
 
+app.get('/', (req, res) => {
+    res.render('dist/main.html')
+})
 app.get('/main', (req, res) => {
     res.render('dist/main.html')
 })
