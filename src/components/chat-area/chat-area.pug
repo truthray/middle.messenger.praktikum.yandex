@@ -5,18 +5,6 @@ include ../base/avatar/avatar.pug
 include ../base/styled-btn/styled-btn.pug
 include ../base/styled-control-btn/styled-control-btn.pug
 
-script.
-    let currentDate = null
-    window.sendMessageHandler = function() {
-        const message = document.getElementById('message').value
-        console.log('Сообщение: ', message)
-        document.getElementById('message').value = ''
-    }
-
-    window.addFileClickHandler = function() {
-        document.getElementById('file_input').click()
-    }
-
 mixin chat-area(messages)
     .chat-container
         div

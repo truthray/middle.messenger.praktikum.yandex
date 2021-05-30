@@ -2,19 +2,6 @@ script(src='/signin.js')
 include /components/base/styled-input/styled-input.pug
 include /components/base/styled-btn/styled-btn.pug
 
-script.
-    window.signIn = function() {
-        const login = document.getElementById('Логин').value
-        const password = document.getElementById('Пароль').value
-        console.log(`Логин: ${login}, пароль: ${password}`)
-        
-        window.location = '/'
-    }
-
-    window.redirectToSignUp = function() {
-        window.location = '/signup.html'
-    }
-
 <!DOCTYPE html>
 html(lang="ru")
     head
