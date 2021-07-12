@@ -5,30 +5,10 @@ include ../base/styled-input/styled-input.pug
 include ../base/styled-btn/styled-btn.pug
 include ../base/avatar/avatar.pug
 
-script. 
-    window.saveChanges = function() {
-        const email = document.getElementById('Почта').value
-        const login = document.getElementById('Логин').value
-        const first_name = document.getElementById('Имя').value
-        const second_name = document.getElementById('Фамилия').value
-        const phone = document.getElementById('Телефон').value
-        const new_password = document.getElementById('Новый пароль').value
-        const old_password = document.getElementById('Старый пароль').value
-        console.log(`Почта: ${email}, Логин: ${login}, Имя: ${first_name}, Фамилия: ${second_name}, Телефон: ${phone}, Новый пароль: ${new_password}, Старый пароль: ${old_password}`)
-    }
-
-    window.signOut = function() {
-        window.location = '/signin.html'
-    }
-
-    window.onAvatarClick = function() {
-        document.getElementById('avatar_input').click()
-    }
-
 mixin profile(person)
     .profile 
         .profile__block
-            img.profile__image(src=person.avatar, onclick='onAvatarClick()')
+            img.profile__image(src=person.avatar, onclick='application.profile.onAvatarClick()')
         .profile__block
             +styled-input('Почта', false, person.email)
         .profile__block
@@ -45,8 +25,8 @@ mixin profile(person)
             +styled-input('Старый пароль', true, '')
         .profile__block
             .profile__btn-block
-                div(onclick='saveChanges()')
+                div(onclick='application.profile.saveChanges()')
                     +styled-btn('Сохранить изменения')
-                div(onclick='signOut()')
+                div(onclick='application.profile.signOut()')
                     +styled-btn('Выйти')
         input(id='avatar_input', style="display: none", type='file')

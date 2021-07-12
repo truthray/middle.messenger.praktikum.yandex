@@ -1,6 +1,7 @@
-script(src='/signin.js')
 include /components/base/styled-input/styled-input.pug
 include /components/base/styled-btn/styled-btn.pug
+
+script(src='./signin.js')
 
 <!DOCTYPE html>
 html(lang="ru")
@@ -20,7 +21,7 @@ html(lang="ru")
                     +styled-input('Пароль', true)
                 .signin__block
                     .signin__btn-block
-                        div(onclick='signIn()')
+                        div(onclick='application.signinModule.signIn()')
                             +styled-btn('Войти')
-                        div(onclick='redirectToSignUp()')
+                        div(onclick='application.signinModule.redirectToSignUp()')
                             +styled-btn('Зарегистрироваться')

@@ -1,7 +1,10 @@
 import './404.scss';
 
 (function () {
-    window.backToMain = function() {
-        window.location = '/'
+    window.application = {}
+    window.application.errorPage = {
+        backToMain: function() {
+            window.location = '/'
+        }
     }
 })()
