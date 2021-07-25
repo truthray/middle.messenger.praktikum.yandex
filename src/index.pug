@@ -1,10 +1,10 @@
 script(src='./index.js')
 
-include /components/chat-person/chat-person.pug
-include /components/chat-area/chat-area.pug
-include /components/profile/profile.pug
-include /components/base/styled-input/styled-input.pug
-include /components/base/styled-btn/styled-btn.pug
+include components/chat-person/chat-person.pug
+include components/chat-area/chat-area.pug
+include components/profile/profile.pug
+include components/base/styled-input/styled-input.pug
+include components/base/styled-btn/styled-btn.pug
 
 <!DOCTYPE html>
 html(lang="ru")
@@ -16,17 +16,17 @@ html(lang="ru")
     body
         .main-page 
             ul.main-page__friends-list
-                li(onclick='switchToProfile(' + profile.id + ')', class='chat-person__self chat-person', id=profile.id)
+                li(onclick='application.mainModule.switchToProfile(' + profile.id + ')', class='chat-person__self chat-person', id=profile.id)
                     +chat-person(profile, active)
                 li(style='display: flex; justify-content: space-between; padding: 10px 20px')
-                    .self-align-center(onclick='removePersonHandler()')
+                    .self-align-center(onclick='application.mainModule.removePersonHandler()')
                         +styled-control-btn('-')
                     div(class='margin: 10px')
                         +styled-input('Логин')
-                    .self-align-center(onclick='addPersonHandler()')
+                    .self-align-center(onclick='application.mainModule.addPersonHandler()')
                             +styled-control-btn('+')
                 each person in persons
-                    li(onclick='changeActive(' + person.id + ')', class='chat-person', id=person.id)
+                    li(onclick='application.mainModule.changeActive(' + person.id + ')', class='chat-person', id=person.id)
                         +chat-person(person, active)
             .main-page__chat-area.hidden(id='chat-area')
                 +chat-area(getMessages(active))

@@ -30,7 +30,7 @@ html(lang="ru")
                     +styled-input('Пароль (еще раз)', true, '')
                 .signup__block
                     .signup__btn-block
-                        div(onclick='signUp()')
+                        div(onclick='application.signupModule.signUp()')
                             +styled-btn('Зарегистрироваться')
-                        div(onclick='redirectToSignIn()')
+                        div(onclick='application.signupModule.redirectToSignIn()')
                             +styled-btn('Войти')
