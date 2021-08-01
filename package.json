@@ -11,7 +11,7 @@
     "build": "./node_modules/.bin/parcel build src/*.pug src/signin.pug src/signup.pug src/index.pug src/pages/404/404.pug src/pages/50x/50x.pug",
     "start": "./node_modules/.bin/parcel build src/*.pug src/signin.pug src/signup.pug src/index.pug src/pages/404/404.pug src/pages/50x/50x.pug & ts-node index.ts",
     "lint": "eslint . --ext .ts --fix",
-    "stylelint": "npx stylelint '**/*.scss' --fix"
+    "stylelint": "npx stylelint '**/*.scss'"
   },
   "repository": {
     "type": "git",
