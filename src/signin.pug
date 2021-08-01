@@ -1,7 +1,4 @@
-include /components/base/styled-input/styled-input.pug
-include /components/base/styled-btn/styled-btn.pug
-
-script(src='./signin.js')
+script(src='./signin.ts')
 
 <!DOCTYPE html>
 html(lang="ru")
@@ -11,17 +8,4 @@ html(lang="ru")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title Вход
     body
-        .signin
-            div
-            .signin__form-block
-                h1.signin__title Вход
-                .signin__block
-                    +styled-input('Логин')
-                .signin__block
-                    +styled-input('Пароль', true)
-                .signin__block
-                    .signin__btn-block
-                        div(onclick='application.signinModule.signIn()')
-                            +styled-btn('Войти')
-                        div(onclick='application.signinModule.redirectToSignUp()')
-                            +styled-btn('Зарегистрироваться')
+        .app(id="app")

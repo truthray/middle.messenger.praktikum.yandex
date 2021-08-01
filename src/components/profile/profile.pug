@@ -1,32 +1,26 @@
-script(src='./components/profile/profile.js')
-
-include ../base/styled-control-btn/styled-control-btn.pug
-include ../base/styled-input/styled-input.pug
-include ../base/styled-btn/styled-btn.pug
-include ../base/avatar/avatar.pug
-
-mixin profile(person)
-    .profile 
+.profile 
+    form(action='/index.html',method='get')
         .profile__block
-            img.profile__image(src=person.avatar, onclick='application.profile.onAvatarClick()')
+            .profile__block__avatar 
+                | !{avatar}
         .profile__block
-            +styled-input('Почта', false, person.email)
+            | !{emailInput}
         .profile__block
-            +styled-input('Логин', false, person.login)
+            | !{loginInput}
         .profile__block
-            +styled-input('Имя', false, person.first_name)
+            | !{nameInput}
         .profile__block
-            +styled-input('Фамилия', false, person.second_name)
+            | !{surnameInput}
         .profile__block
-            +styled-input('Телефон', false, person.phone)
+            | !{phoneInput}
         .profile__block
-            +styled-input('Новый пароль', true, '')
+            | !{newPasswordInput}
         .profile__block
-            +styled-input('Старый пароль', true, '')
+            | !{oldPasswordInput}
         .profile__block
             .profile__btn-block
-                div(onclick='application.profile.saveChanges()')
-                    +styled-btn('Сохранить изменения')
-                div(onclick='application.profile.signOut()')
-                    +styled-btn('Выйти')
+                div
+                    | !{saveBtn}
+                div
+                    | !{exitBtn}
         input(id='avatar_input', style="display: none", type='file')

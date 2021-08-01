@@ -1,1 +1,0 @@
-import './styled-input.scss';

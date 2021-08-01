@@ -1,31 +1,31 @@
 @import '/variables.scss';
 
 .message {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 10px;
 
-    &__text {
-        padding: 10px;
-        border-radius: 0px 40px 40px 40px;
-        background: $message;
-        color: $labelPrimary;
+  &__text {
+    padding: 10px;
+    border-radius: 0 40px 40px 40px;
+    background: $message;
+    color: $labelPrimary;
 
-        &--self {
-            background: $messageSelf;
-            border-radius: 40px 0px 40px 40px;
-        }
+    &--self {
+      background: $messageSelf;
+      border-radius: 40px 0 40px 40px;
     }
+  }
 
-    &__time {
-        color: $labelPrimary;
-        font-size: .8rem;
-        text-align: right;
-        margin-top: 5px;
+  &__time {
+    color: $labelPrimary;
+    font-size: 0.8rem;
+    text-align: right;
+    margin-top: 5px;
 
-        &--self {
-            text-align: left;
-        }
+    &--self {
+      text-align: left;
     }
+  }
 }

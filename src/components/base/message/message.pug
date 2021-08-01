@@ -1,5 +1,3 @@
-script(src='./components/base/message/message.js')
-mixin message(message)
-    .message
-        .message__text(class=message.self ? 'message__text--self' : null)  #{message.text}
-        .message__time(class=message.self ? 'message__time--self' : null) #{message.time}
+.message
+    .message__text(class=message.self ? 'message__text--self' : null) #{message.text}
+    .message__time(class=message.self ? 'message__time--self' : null) #{message.time}

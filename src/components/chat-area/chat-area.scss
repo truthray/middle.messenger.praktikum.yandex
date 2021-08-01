@@ -2,47 +2,48 @@
 @import '/common.scss';
 
 .chat-container {
-    height: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .new-message-block {
-    padding: 10px 20px;
-    background-color: $newMessageArea;
-    display: flex;
+  padding: 10px 20px;
+  background-color: $newMessageArea;
+  display: flex;
+  width: 100%;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+
+  &__input {
+    margin: 0 10px;
     width: 100%;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
+    background-color: transparent;
+    color: $inputPrimary;
+    font-size: 1rem;
+    border: none;
 
-    &__input {
-        margin: 0 10px;
-        width: 100%;
-        background-color: transparent;
-        color: $inputPrimary;
-        font-size: 1rem;
-        border: none;
-
-        &:focus {
-            outline: none;
-        }
+    &:focus {
+      outline: none;
     }
+  }
 }
 
 .message-block {
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    &--self {
-        justify-content: end;
-    }
+  width: 100%;
+  display: flex;
+  justify-content: start;
+
+  &--self {
+    justify-content: end;
+  }
 }
 
 .message-date {
-    display: flex;
-    justify-content: center;
-    color: $labelPrimary;
-    margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  color: $labelPrimary;
+  margin: 10px 0;
 }

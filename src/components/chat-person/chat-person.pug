@@ -1,14 +1,12 @@
-script(src='./components/chat-person/chat-person.js')
-
-include ../base/styled-control-btn/styled-control-btn.pug
-include ../base/avatar/avatar.pug
-
-mixin chat-person(person, active)
-    .chat-person__friend-info
-        +avatar(person.avatar)
-        .chat-person__friend-info__label #{person.login}
-    .chat-person__btn-block
+li(class='chat-person', class=active === person.id ? 'chat-person--active' : null, id=person.id)
+    .chat-person__friend-info(id=person.id)
+        | !{avatar}
+        //- +avatar(person.avatar)
+        .chat-person__friend-info__label(id=person.id) #{person.login}
+    .chat-person__btn-block(id=person.id)
         if person.unread
-            +styled-control-btn(person.unread)
+            | !{unreadBtn}
+            //- +styled-control-btn(person.unread)
         else if person.name
-            +styled-control-btn('+')
+            | !{plusBtn}
+    //-         //- +styled-control-btn('+')

@@ -1,6 +1,11 @@
 .avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 1px solid #fff;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+
+  &--large {
+    width: 150px;
+    height: 150px;
+  }
 }

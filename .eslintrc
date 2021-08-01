@@ -1,0 +1,11 @@
+{
+	"extends": ["xo", "xo-typescript"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "parserOptions": {
+        "project": "tsconfig.json"
+    },
+    "rules": {
+        "no-unused-vars": 0
+    }
+}

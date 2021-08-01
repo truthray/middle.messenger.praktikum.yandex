@@ -1,6 +1,4 @@
-script(src='/components/base/styled-input/styled-input.js')
-    
-mixin styled-input(label, isPassword = false, value)
-    .styled-input
-        .styled-input__label #{label}
-        input.styled-input__input(id=label, value=value, type=isPassword ? 'password' : null)
+.styled-input(class=valid ? null : 'styled-input--warn')
+    .styled-input__label #{label}
+    input.styled-input__input(id=label, value=value, type=isPassword ? 'password' : null, required=required, pattern=pattern tabindex="0")
+    div(style="color: red") #{msg}
