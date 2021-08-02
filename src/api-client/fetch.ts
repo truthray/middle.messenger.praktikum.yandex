@@ -16,17 +16,20 @@ function queryStringify(data: Record<string, string>) {
 }
 
 export default class HTTPTransport {
-	get = async (url: string, options = {}) => this.request(url, {...options, method: METHODS.GET}, options.timeout);
+	get = async (url: string, options: Record<string, any> = {}) => {
+		url = options.data ? `${url}?${queryStringify(options.data)}` : url;
+		options.data = undefined;
+		return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+	};
 
-	put = async (url: string, options = {}) => this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+	put = async (url: string, options: Record<string, any> = {}) => this.request(url, {...options, method: METHODS.PUT}, options.timeout);
 
-	post = async (url: string, options = {}) => this.request(url, {...options, method: METHODS.POST}, options.timeout);
+	post = async (url: string, options: Record<string, any> = {}) => this.request(url, {...options, method: METHODS.POST}, options.timeout);
 
-	delete = async (url: string, options = {}) => this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+	delete = async (url: string, options: Record<string, any> = {}) => this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
 
 	request = async (url: string, options: Record<string, any>, timeout = 5000) => new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
-		url = options.method === METHODS.GET && options.data ? `${url}?${queryStringify(options.data)}` : url;
 		xhr.open(options.method, url);
 		xhr.timeout = timeout;
 		if (options.headers) {
@@ -52,7 +55,7 @@ export default class HTTPTransport {
 		xhr.onerror = handleError;
 		xhr.ontimeout = handleError;
 
-		if (options.method === METHODS.GET || !options.data) {
+		if (options.data) {
 			xhr.send();
 		} else {
 			xhr.send(JSON.stringify(options.data));

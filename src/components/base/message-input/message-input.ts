@@ -22,6 +22,11 @@ export default class MessageInput extends Block {
 		return this.value;
 	}
 
+	componentDidUpdate() {
+		this.value = '';
+		return true;
+	}
+
 	componentDidMount() {
 		this.field = this.getContent()?.getElementsByTagName('input')[0];
 		if (this.field) {

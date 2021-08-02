@@ -71,15 +71,14 @@ export default class Block {
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	componentDidMount() {}
 
-	_componentDidUpdate(oldProps: Props, newProps: Props) {
-		const response = this.componentDidUpdate(oldProps, newProps);
+	_componentDidUpdate() {
+		const response = this.componentDidUpdate();
 		if (response) {
 			this.eventBus.emit(EVENTS.FLOW_RENDER);
 		}
 	}
 
 	componentDidUpdate() {
-		// Console.log(oldProps, newProps);
 		return true;
 	}
 

@@ -7,9 +7,9 @@
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main. Название pull request может быть любое.",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/parcel src/index.pug src/signin.pug src/signup.pug src/404.pug src/50x.pug",
-    "build": "./node_modules/.bin/parcel build src/*.pug src/signin.pug src/signup.pug src/index.pug src/pages/404/404.pug src/pages/50x/50x.pug",
-    "start": "./node_modules/.bin/parcel build src/*.pug src/signin.pug src/signup.pug src/index.pug src/pages/404/404.pug src/pages/50x/50x.pug & ts-node index.ts",
+    "dev": "./node_modules/.bin/parcel src/*.pug",
+    "build": "./node_modules/.bin/parcel build src/*.pug",
+    "start": "./node_modules/.bin/parcel build src/*.pug & ts-node index.ts",
     "lint": "eslint . --ext .ts --fix",
     "stylelint": "npx stylelint '**/*.scss'"
   },
@@ -28,6 +28,7 @@
     "@types/node": "^16.4.8",
     "@types/uuid": "^8.3.1",
     "components": "^0.1.0",
+    "dotenv": "^10.0.0",
     "fs": "0.0.1-security",
     "uuid": "^8.3.2"
   },

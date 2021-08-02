@@ -11,11 +11,4 @@
                     | !{messageAreas[message.id]}
                 if (message.self)
                     | !{selfAvatar}
-    .new-message-block
-        div()
-            | !{addFileBtn}
-            input(id='file_input', style="display: none", type='file')
-        div(style='width: 100%')
-            | !{messageInput}
-        div()
-            | !{sendBtn}
+    | !{newMessageArea}

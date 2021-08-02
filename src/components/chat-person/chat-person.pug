@@ -1,12 +1,9 @@
 li(class='chat-person', class=active === person.id ? 'chat-person--active' : null, id=person.id)
     .chat-person__friend-info(id=person.id)
         | !{avatar}
-        //- +avatar(person.avatar)
         .chat-person__friend-info__label(id=person.id) #{person.login}
     .chat-person__btn-block(id=person.id)
         if person.unread
             | !{unreadBtn}
-            //- +styled-control-btn(person.unread)
         else if person.name
             | !{plusBtn}
-    //-         //- +styled-control-btn('+')
