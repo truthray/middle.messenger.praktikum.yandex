@@ -72,7 +72,6 @@ export default class StyledInput extends Block {
 		this.field = this.getContent()?.getElementsByTagName('input')[0];
 		if (this.field) {
 			this.field.addEventListener('input', this.input);
-			// This.field.addEventListener('focus', this.focus);
 			this.field.addEventListener('blur', this.blur);
 		}
 	}

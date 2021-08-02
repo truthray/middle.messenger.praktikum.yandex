@@ -1,4 +1,4 @@
 .styled-input(class=valid ? null : 'styled-input--warn')
-    .styled-input__label #{label}
+    label.styled-input__label(for=label) #{label}
     input.styled-input__input(id=label, value=value, type=isPassword ? 'password' : null, required=required, pattern=pattern tabindex="0")
     div(style="color: red") #{msg}
