@@ -1,0 +1,23 @@
+.signup
+    div
+    .signup__form-block
+        h1.signup__title Регистрация
+        form(action='/index.html',method='get')
+            .signup__block 
+                | !{emailInput}
+            .signup__block 
+                | !{loginInput}
+            .signup__block 
+                | !{nameInput}
+            .signup__block
+                | !{surnameInput}
+            .signup__block
+                | !{phoneInput}
+            .signup__block
+                | !{passwordInput}
+            .signup__block
+                | !{passwordAgainInput}
+            .signup__block
+                .signup__btn-block
+                    | !{signUpBtn}
+                    | !{signInBtn}

@@ -1,1 +1,0 @@
-import './styled-control-btn.scss';

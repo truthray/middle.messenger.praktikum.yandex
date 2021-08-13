@@ -1,0 +1,49 @@
+@import '/variables.scss';
+@import '/components/base/styled-input/styled-input.scss';
+@import '/components/base/styled-btn/styled-btn.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100vh;
+  background-color: $backgroundPrimary;
+}
+
+.signup {
+  display: grid;
+  grid-template-columns: 60% 40%;
+
+  &__form-block {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $signForm;
+  }
+
+  &__block {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+    > * {
+      width: 300px;
+    }
+  }
+
+  &__btn-block {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: $labelPrimary;
+  }
+}

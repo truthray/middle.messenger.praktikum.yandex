@@ -2,24 +2,32 @@
 @import '/common.scss';
 
 .profile {
-    &__block {
+  &__block {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+    > * {
+      width: 300px;
+    }
+
+    &__avatar {
+      > div {
         display: flex;
         justify-content: center;
-        margin: 20px;
-        > * {
-            width: 300px;
-        }
+      }
     }
+  }
 
-    &__btn-block {
-        display: flex;
-        justify-content: space-between;
-    }
+  &__btn-block {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    &__image {
-        width: 125px;
-        height: 125px;
-        border-radius: 50%;
-        cursor: pointer;
-    }
+  &__image {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 }

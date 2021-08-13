@@ -1,6 +1,4 @@
-script(src='./signup.js')
-include /components/base/styled-input/styled-input.pug
-include /components/base/styled-btn/styled-btn.pug
+script(src='./signup.ts')
 
 <!DOCTYPE html>
 html(lang="ru")
@@ -10,27 +8,4 @@ html(lang="ru")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title Вход
     body
-        main.signup
-            div
-            .signup__form-block
-                h1.signup__title Регистрация
-                .signup__block
-                    +styled-input('Почта')
-                .signup__block
-                    +styled-input('Логин')
-                .signup__block
-                    +styled-input('Имя')
-                .signup__block
-                    +styled-input('Фамилия')
-                .signup__block
-                    +styled-input('Телефон')
-                .signup__block
-                    +styled-input('Пароль', true, '')
-                .signup__block
-                    +styled-input('Пароль (еще раз)', true, '')
-                .signup__block
-                    .signup__btn-block
-                        div(onclick='application.signupModule.signUp()')
-                            +styled-btn('Зарегистрироваться')
-                        div(onclick='application.signupModule.redirectToSignIn()')
-                            +styled-btn('Войти')
+        .app(id="app")

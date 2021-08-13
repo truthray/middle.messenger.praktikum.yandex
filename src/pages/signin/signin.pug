@@ -1,0 +1,13 @@
+.signin
+    div
+    .signin__form-block
+        h1.signin__title Вход
+        form(action='/index.html',method='get')
+            .signin__block 
+                | !{loginInput}
+            .signin__block 
+                | !{passwordInput}
+            .signin__block
+                .signin__btn-block
+                    | !{signInBtn}
+                    | !{signUpBtn}

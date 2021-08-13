@@ -1,16 +1,19 @@
 @import '/components/base/styled-btn/styled-btn.scss';
 
 body {
-    box-sizing: border-box;
-    margin: 0;
-    height: 100vh;
-    background-color: $backgroundPrimary;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+  height: 100vh;
+  background-color: $backgroundPrimary;
 }
 
 .error-title {
-    display: flex; 
-    justify-content: center;
-    color: $labelPrimary;
-    font-size: 1rem;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  color: $labelPrimary;
+  font-size: 1rem;
+  margin-bottom: 10px;
 }

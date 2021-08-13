@@ -1,0 +1,22 @@
+.main-page 
+    ul.main-page__friends-list
+        div(style='width: 100%;')
+            | !{chatPerson}
+        li(style='display: flex; justify-content: space-between; padding: 10px 20px;')
+            .self-align-center
+                | !{minusBtn}
+            div(class='margin: 10px;')
+                | !{loginInput}
+            .self-align-center
+                | !{plusBtn}
+        each friend in persons
+            div(style='width: 100%', id=friend.id)
+                | !{chatPersons[friend.id - 2]}
+    .main-page__chat-area(id='chat-area')
+        if active === person.id
+            | !{profile}
+        else 
+            | !{chatArea}
+    //-     +chat-area(getMessages(active))
+    //- .main-page__chat-area(id='profile-area')
+    //-     +profile(profile)
