@@ -8,7 +8,7 @@ const app = express();
 app.use(express.static('./dist/'));
 
 app.get('/', (_, res) => {
-	res.render('dist/index.html');
+	res.render('dist/app.html');
 });
 app.get('/main', (_, res) => {
 	res.render('dist/index.html');

@@ -1,3 +1,4 @@
+import {Router} from './../../common/router';
 import './50x.scss';
 import * as pug from 'pug';
 import Block from '../../common/block';
@@ -9,7 +10,7 @@ export default class Err50xPage extends Block {
 		super('div', {
 			backToMainBtn: new StyledBtn({label: 'На главную', type: 'button', events: {
 				click: () => {
-					window.location.href = '/index.html';
+					Router.instance?.go('/');
 				},
 			}}),
 		});

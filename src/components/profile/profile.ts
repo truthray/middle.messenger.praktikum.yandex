@@ -1,3 +1,4 @@
+import {Router} from './../../common/router';
 import {phoneRule} from './../../utils/rules';
 import './profile.scss';
 import * as pug from 'pug';
@@ -28,7 +29,7 @@ export default class ProfileArea extends Block {
 			exitBtn: new StyledBtn({label: 'Выйти', events: {
 				click: (e: Event) => {
 					e.preventDefault();
-					window.location.href = '/signin.html';
+					Router.instance?.go('/signin');
 				},
 			}}),
 		});

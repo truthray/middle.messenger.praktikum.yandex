@@ -1,3 +1,4 @@
+import {Router} from './../../common/router';
 import {emailRule, sixSymbolsRule, phoneRule} from './../../utils/rules';
 import * as pug from 'pug';
 import Block from '../../common/block';
@@ -20,7 +21,7 @@ export default class SignupPage extends Block {
 			signInBtn: new StyledBtn({label: 'Войти', type: 'button', events: {
 				click: (e: Event) => {
 					e.preventDefault();
-					window.location.href = '/signin.html';
+					Router.instance?.go('/signin');
 				},
 			}}),
 			signUpBtn: new StyledBtn({}),

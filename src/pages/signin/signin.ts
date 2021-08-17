@@ -1,3 +1,4 @@
+import {Router} from './../../common/router';
 import {sixSymbolsRule} from './../../utils/rules';
 import * as pug from 'pug';
 import Block from '../../common/block';
@@ -15,14 +16,16 @@ export default class SigninPage extends Block {
 			signUpBtn: new StyledBtn({label: 'Зарегистрироваться', type: 'button', events: {
 				click: (e: Event) => {
 					e.preventDefault();
-					window.location.href = '/signup.html';
+					Router.instance?.go('/signup');
 				},
 			}}),
 		});
 
 		(this.props.signInBtn as Block).setProps({label: 'Войти', type: 'submit', fields: [this.props.loginInput, this.props.passwordInput], events: {
-			click: () => {
+			click: (e: Event) => {
+				e.preventDefault();
 				console.log(`Вход: Логин - ${(this.props.loginInput as StyledInput).value}, Пароль - ${(this.props.passwordInput as StyledInput).value}`);
+				Router.instance?.go('/');
 				// Window.location.href = '/index.html';
 			},
 		}});

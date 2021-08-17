@@ -22,12 +22,12 @@ export default class NewMessageArea extends Block {
 	}
 
 	sendMessage(e: Event) {
-        e.preventDefault();
-        const value = (this.props.messageInput as MessageInput).getValue();
-        if (value) {
-            console.log('Сообщение: ', value);
-            (this.props.messageInput as MessageInput).setProps({...(this.props.messageInput as Block).props, value: ''});
-        }
+		e.preventDefault();
+		const value = (this.props.messageInput as MessageInput).getValue();
+		if (value) {
+			console.log('Сообщение: ', value);
+			(this.props.messageInput as MessageInput).setProps({...(this.props.messageInput as Block).props, value: ''});
+		}
 	}
 
 	render() {
