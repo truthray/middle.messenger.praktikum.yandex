@@ -1,4 +1,6 @@
-import {Router} from './../../common/router';
+import {UserInfo} from './../../models/user';
+import {AuthApi} from '../../api/auth-api';
+import {useRouter} from './../../common/router';
 import {sixSymbolsRule} from './../../utils/rules';
 import * as pug from 'pug';
 import Block from '../../common/block';
@@ -16,7 +18,7 @@ export default class SigninPage extends Block {
 			signUpBtn: new StyledBtn({label: 'Зарегистрироваться', type: 'button', events: {
 				click: (e: Event) => {
 					e.preventDefault();
-					Router.instance?.go('/signup');
+					useRouter()?.go('/signup');
 				},
 			}}),
 		});
@@ -24,9 +26,17 @@ export default class SigninPage extends Block {
 		(this.props.signInBtn as Block).setProps({label: 'Войти', type: 'submit', fields: [this.props.loginInput, this.props.passwordInput], events: {
 			click: (e: Event) => {
 				e.preventDefault();
-				console.log(`Вход: Логин - ${(this.props.loginInput as StyledInput).value}, Пароль - ${(this.props.passwordInput as StyledInput).value}`);
-				Router.instance?.go('/');
-				// Window.location.href = '/index.html';
+				const user: UserInfo = {
+					login: (this.props.loginInput as StyledInput).value,
+					password: (this.props.passwordInput as StyledInput).value,
+				};
+				AuthApi.signin(user).then(e => {
+					if ((e as XMLHttpRequest).status === 200) {
+						useRouter()?.go('/');
+					}
+				}).catch(e => {
+					console.log(e);
+				});
 			},
 		}});
 	}

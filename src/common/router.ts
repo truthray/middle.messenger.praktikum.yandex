@@ -1,11 +1,10 @@
 import isEqual from '../utils/is-equal';
-import render from '../utils/render';
 import Block from './block';
 
 export class Route {
-	private block: Block | null = null;
+	private block: Block | undefined;
 
-	constructor(private pathname: string, private readonly BlockClass: new () => Block, private readonly props: Record<string, any>) {}
+	constructor(private pathname: string, private readonly BlockClass: new () => Block) {}
 
 	navigate(pathname: string) {
 		if (this.match(pathname)) {
@@ -25,10 +24,8 @@ export class Route {
 	}
 
 	render() {
-		console.log(this.props.rootQuery);
 		if (!this.block) {
 			this.block = new this.BlockClass();
-			console.log('block: ', this.block);
 		}
 
 		this.block.render();
@@ -36,37 +33,45 @@ export class Route {
 }
 
 export class Router {
-	static instance: Router | null = null;
+	static instance: Router | undefined;
 
 	private readonly routes: Route[];
 	private notFound: Route | undefined;
 	private readonly history: History;
-	private readonly rootQuery: string;
 	private currentRoute: Route | undefined;
 
-	constructor(rootQuery: string) {
+	constructor() {
 		this.routes = [];
 		this.history = window.history;
 		this.currentRoute = undefined;
-		this.rootQuery = rootQuery;
+
 		if (!Router.instance) {
 			Router.instance = this;
 		}
 	}
 
+	get getCurrentRoute() {
+		return this.currentRoute;
+	}
+
+	get getHistory() {
+		return this.history;
+	}
+
 	use<T extends Block>(pathname: string, block: new () => T) {
-		const route = new Route(pathname, block, {rootQuery: this.rootQuery});
+		const route = new Route(pathname, block);
 		this.routes.push(route);
 		return this;
 	}
 
 	onNotFound<T extends Block>(block: new () => T, pathname = '/not-found') {
-		this.notFound = new Route(pathname, block, {rootQuery: this.rootQuery});
+		this.notFound = new Route(pathname, block);
 		return this;
 	}
 
 	start() {
-		window.onpopstate = (event: PopStateEvent) => {
+		window.onpopstate = (event: any) => {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			this._onRoute(event.currentTarget.location.pathname);
 		};
 
@@ -74,8 +79,6 @@ export class Router {
 	}
 
 	_onRoute(pathname: string) {
-		console.log(pathname);
-		console.log(this.routes);
 		const route = this.getRoute(pathname);
 
 		if (this.currentRoute) {
@@ -107,4 +110,8 @@ export class Router {
 	getRoute(pathname: string) {
 		return this.routes.find(route => route.match(pathname));
 	}
+}
+
+export function useRouter(): Router | undefined {
+	return Router.instance;
 }

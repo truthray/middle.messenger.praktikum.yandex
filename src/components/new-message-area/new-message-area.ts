@@ -24,8 +24,9 @@ export default class NewMessageArea extends Block {
 	sendMessage(e: Event) {
 		e.preventDefault();
 		const value = (this.props.messageInput as MessageInput).getValue();
-		if (value) {
-			console.log('Сообщение: ', value);
+		if (value && this.props.sendMessage) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			this.props.sendMessage(value);
 			(this.props.messageInput as MessageInput).setProps({...(this.props.messageInput as Block).props, value: ''});
 		}
 	}

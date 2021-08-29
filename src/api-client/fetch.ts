@@ -5,19 +5,60 @@ enum METHODS {
 	DELETE = 'DELETE',
 }
 
-function queryStringify(data: Record<string, string>) {
-	if (Array.isArray(data)) {
-		return data.join(',');
+type PlainObject<T = unknown> = {
+	[k in string]: T;
+};
+
+function isPlainObject(value: unknown): value is PlainObject {
+	return typeof value === 'object'
+        && value !== null
+        && value.constructor === Object
+        && Object.prototype.toString.call(value) === '[object Object]';
+}
+
+function isArray(value: unknown): value is any[] {
+	return Array.isArray(value);
+}
+
+function isArrayOrObject(value: unknown): value is any[] | PlainObject {
+	return isPlainObject(value) || isArray(value);
+}
+
+function getKey(key: string, parentKey?: string) {
+	return parentKey ? `${parentKey}[${key}]` : key;
+}
+
+function getParams(data: PlainObject | any[], parentKey?: string) {
+	const result: Array<[string, string]> = [];
+
+	for (const [key, value] of Object.entries(data)) {
+		if (isArrayOrObject(value)) {
+			result.push(...getParams(value, getKey(key, parentKey)));
+		} else {
+			result.push([getKey(key, parentKey), encodeURIComponent(String(value))]);
+		}
 	}
 
-	return Object.keys(data).reduce((acc, x) => acc === ''
-		? acc + `${x}=${data[x]}`
-		: acc + `&${x}=${data[x]}`, '');
+	return result;
+}
+
+export function queryString(data: PlainObject) {
+	if (!isPlainObject(data)) {
+		throw new Error('input must be an object');
+	}
+
+	return getParams(data).map(arr => arr.join('=')).join('&');
 }
 
 export default class HTTPTransport {
+	private readonly baseUrl: string;
+
+	constructor(url: string) {
+		this.baseUrl = ' https://ya-praktikum.tech/api/v2' + url;
+	}
+
 	get = async (url: string, options: Record<string, any> = {}) => {
-		url = options.data ? `${url}?${queryStringify(options.data)}` : url;
+		url = options.data ? `${url}?${queryString(options.data)}` : url;
 		options.data = undefined;
 		return this.request(url, {...options, method: METHODS.GET}, options.timeout);
 	};
@@ -30,20 +71,22 @@ export default class HTTPTransport {
 
 	request = async (url: string, options: Record<string, any>, timeout = 5000) => new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
-		xhr.open(options.method, url);
+		xhr.open(options.method, `${this.baseUrl}${url}`);
+		xhr.withCredentials = true;
 		xhr.timeout = timeout;
+
+		xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+
 		if (options.headers) {
 			Object.keys(options.headers).forEach(key => {
-				// TODO FIX
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 				xhr.setRequestHeader(key, (options.headers as Record<string, any>)[key]);
 			});
+		} else if (!options.data || !(options.data instanceof FormData)) {
+			xhr.setRequestHeader('Content-Type', 'application/json');
 		}
 
-		xhr.setRequestHeader('Content-Type', 'text/plain');
-
 		xhr.onload = () => {
-			console.log(xhr);
 			resolve(xhr);
 		};
 
@@ -56,9 +99,13 @@ export default class HTTPTransport {
 		xhr.ontimeout = handleError;
 
 		if (options.data) {
-			xhr.send();
+			if (options.data instanceof FormData) {
+				xhr.send(options.data);
+			} else {
+				xhr.send(JSON.stringify(options.data));
+			}
 		} else {
-			xhr.send(JSON.stringify(options.data));
+			xhr.send();
 		}
 	});
 }

@@ -1,4 +1,6 @@
-import {Router} from './../../common/router';
+import {AuthApi} from './../../api/auth-api';
+import {NewUserDto} from './../../models/user';
+import {useRouter} from './../../common/router';
 import {emailRule, sixSymbolsRule, phoneRule} from './../../utils/rules';
 import * as pug from 'pug';
 import Block from '../../common/block';
@@ -21,7 +23,7 @@ export default class SignupPage extends Block {
 			signInBtn: new StyledBtn({label: 'Войти', type: 'button', events: {
 				click: (e: Event) => {
 					e.preventDefault();
-					Router.instance?.go('/signin');
+					useRouter()?.go('/signin');
 				},
 			}}),
 			signUpBtn: new StyledBtn({}),
@@ -32,8 +34,22 @@ export default class SignupPage extends Block {
 			type: 'submit',
 			fields: [this.props.emailInput, this.props.loginInput, this.props.nameInput, this.props.surnameInput, this.props.phoneInput, this.props.passwordInput, this.props.passwordAgainInput],
 			events: {
-				click: () => {
-					console.log(`Регистрация: Логин - ${(this.props.loginInput as StyledInput).value}, Пароль - ${(this.props.passwordInput as StyledInput).value}, Пароль еще раз - ${(this.props.passwordAgainInput as StyledInput).value}, Email - ${(this.props.emailInput as StyledInput).value}, Телефон - ${(this.props.phoneInput as StyledInput).value}, Имя - ${(this.props.nameInput as StyledInput).value}, Фамилия - ${(this.props.surnameInput as StyledInput).value}`);
+				click: (e: Event) => {
+					e.preventDefault();
+					const user: NewUserDto = {
+						first_name: (this.props.nameInput as StyledInput).value,
+						second_name: (this.props.surnameInput as StyledInput).value,
+						login: (this.props.loginInput as StyledInput).value,
+						email: (this.props.emailInput as StyledInput).value,
+						password: (this.props.passwordInput as StyledInput).value,
+						phone: (this.props.phoneInput as StyledInput).value,
+					};
+
+					AuthApi.signup(user).then(() => {
+						useRouter()?.go('/');
+					}).catch(e => {
+						console.log(e);
+					});
 				},
 			}});
 	}
