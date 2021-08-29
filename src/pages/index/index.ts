@@ -52,7 +52,9 @@ export default class IndexPage extends Block {
 		});
 		this.changeActive = this.changeActive.bind(this);
 		this.setProps({...this.props, changeActive: this.changeActive, active: this.active});
+	}
 
+	componentDidMount() {
 		this.fetchChats();
 		this.fetchUser();
 	}
@@ -70,7 +72,7 @@ export default class IndexPage extends Block {
 					avatar: parsed.avatar,
 				}});
 
-				this.setProps({...this.props, userId: parsed.id});
+				this.props.userId = parsed.id;
 			} else if ((user as XMLHttpRequest).status === 401) {
 				useRouter()?.go('/signin');
 			}
@@ -128,19 +130,21 @@ export default class IndexPage extends Block {
 		ChatApi.chats().then(response => {
 			if ((response as XMLHttpRequest).status === 200) {
 				const chats = JSON.parse((response as XMLHttpRequest).response) as Chat[];
-				this.setProps({
-					...this.props,
-					chats,
-					chatPersons: chats.map(chat => new ChatPerson({
-						chat,
-						active: this.active,
-						events: {
-							click: (e: Event) => {
-								this.changeActive(e);
+				if (chats.length !== this.props.chatPersons.length) {
+					this.setProps({
+						...this.props,
+						chats,
+						chatPersons: chats.map(chat => new ChatPerson({
+							chat,
+							active: this.active,
+							events: {
+								click: (e: Event) => {
+									this.changeActive(e);
+								},
 							},
-						},
-					})),
-				});
+						})),
+					});
+				}
 			}
 		}).catch(e => {
 			console.log(e);
