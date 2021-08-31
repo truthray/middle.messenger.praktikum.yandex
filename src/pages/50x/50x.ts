@@ -10,7 +10,7 @@ export default class Err50xPage extends Block {
 		super('div', {
 			backToMainBtn: new StyledBtn({label: 'На главную', type: 'button', events: {
 				click: () => {
-					useRouter()?.go('/');
+					useRouter()?.go('/messenger');
 				},
 			}}),
 		});

@@ -7,9 +7,10 @@ import Signup from './pages/signup';
 
 window.onload = () => {
 	new Router()
-		.use('/', Index)
-		.use('/signin', Signin)
-		.use('/signup', Signup)
+		.use('/messenger', Index)
+		.use('/settings', Index)
+		.use('/', Signin)
+		.use('/sign-up', Signup)
 		.use('/404', Err404)
 		.onNotFound(Err404)
 		.start();

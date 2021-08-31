@@ -39,7 +39,7 @@ export default class ProfileArea extends Block {
 					e.preventDefault();
 
 					AuthApi.logout().then(() => {
-						useRouter()?.go('/signin');
+						useRouter()?.go('/');
 					}).catch(e => {
 						console.log(e);
 					});

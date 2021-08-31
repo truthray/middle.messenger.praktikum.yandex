@@ -74,7 +74,7 @@ export default class IndexPage extends Block {
 
 				this.props.userId = parsed.id;
 			} else if ((user as XMLHttpRequest).status === 401) {
-				useRouter()?.go('/signin');
+				useRouter()?.go('/');
 			}
 		}).catch(e => {
 			console.log('error: ', e);

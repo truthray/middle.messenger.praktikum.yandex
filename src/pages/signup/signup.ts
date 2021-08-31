@@ -23,7 +23,7 @@ export default class SignupPage extends Block {
 			signInBtn: new StyledBtn({label: 'Войти', type: 'button', events: {
 				click: (e: Event) => {
 					e.preventDefault();
-					useRouter()?.go('/signin');
+					useRouter()?.go('/');
 				},
 			}}),
 			signUpBtn: new StyledBtn({}),
@@ -46,7 +46,7 @@ export default class SignupPage extends Block {
 					};
 
 					AuthApi.signup(user).then(() => {
-						useRouter()?.go('/');
+						useRouter()?.go('/messenger');
 					}).catch(e => {
 						console.log(e);
 					});
