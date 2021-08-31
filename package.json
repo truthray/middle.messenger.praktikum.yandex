@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "./node_modules/.bin/parcel src/app.pug",
-    "test": "./node_modules/.bin/mocha -r ts-node/register -r jsdom-global/register",
+    "test": "./node_modules/.bin/mocha -r ts-node/register -r jsdom-global/register -r ignore-styles",
     "build": "./node_modules/.bin/parcel build src/app.pug",
     "start": "./node_modules/.bin/parcel build src/app.pug & ts-node index.ts",
     "lint": "eslint . --ext .ts --fix",
@@ -27,11 +27,17 @@
   "homepage": "https://github.com/truthray/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
     "@babel/register": "^7.15.3",
+    "@types/jsdom": "^16.2.13",
     "@types/node": "^16.4.8",
+    "@types/sinon": "^10.0.2",
     "@types/uuid": "^8.3.1",
+    "babel-register-ts": "^7.0.0",
     "components": "^0.1.0",
     "dotenv": "^10.0.0",
     "fs": "0.0.1-security",
+    "ignore-styles": "^5.0.1",
+    "mocha-jsdom": "^2.0.0",
+    "sinon": "^11.1.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

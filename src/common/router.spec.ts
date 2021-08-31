@@ -1,30 +1,49 @@
-// Import {Router} from './router';
-// import Index from '../pages';
-// import Signin from '../pages/signin';
-// import Signup from '../pages/signup';
-// import Err404 from '../pages/404';
+import {Route, Router, useRouter} from './router';
+import Index from '../pages';
+import Signin from '../pages/signin';
+import Signup from '../pages/signup';
+import Err404 from '../pages/404';
+import { expect } from 'chai';
 
 describe('Проверяем переходы у Роута', () => {
-	// Function createRouter() {
-	// return new Router()
-	// .use('/', Index)
-	// .use('/signin', Signin)
-	// .use('/signup', Signup)
-	// .use('/404', Err404)
-	// .onNotFound(Err404);
-	// }
+	function createRouter() {
+		return new Router()
+			.use('/', Index)
+			.use('/signin', Signin)
+			.use('/signup', Signup)
+			.use('/404', Err404)
+			.onNotFound(Err404);
+	}
 
-	it('Переход на новую страницу должен менять состояние роутера', () => {
+	it('Проверка, что все роуты создались', () => {
+		const router = createRouter();
+		router.start();
+		expect(router.routes.length).to.eq(4);
+	});
 
-		// Const router = createRouter();
-		// console.log(router);
-		// router.start();
+	it('Изначально нет текущего роута', () => {
+		const router = createRouter();
+		expect(router.getCurrentRoute).to.eq(undefined);
+	});
 
-		// router.go('/signin');
-		// router.go('/signup');
+	it('После запуска есть активный роут', () => {
+		const router = createRouter();
+		router.start();
+		expect(router.getCurrentRoute).to.instanceOf(Route);
+	});
 
-		// console.log(router.getCurrentRoute)
+	it('Установлена страница 404', () => {
+		const router = createRouter();
+		router.start()
+		expect(router.notFound?.block).to.instanceOf(Err404);
+	});
 
-		// expect(router.getCurrentRoute).to.eq('/signup');
+	it('Роутер может быть в одном экземпляре', () => {
+		createRouter();
+
+		const router1 = useRouter();
+		const router2 = useRouter();
+	
+		expect(router1).to.eq(router2);
 	});
 });

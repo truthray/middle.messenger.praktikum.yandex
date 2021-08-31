@@ -54,7 +54,11 @@ export default class HTTPTransport {
 	private readonly baseUrl: string;
 
 	constructor(url: string) {
-		this.baseUrl = ' https://ya-praktikum.tech/api/v2' + url;
+		this.baseUrl = 'https://ya-praktikum.tech/api/v2' + url;
+	}
+
+	get url() {
+		return this.baseUrl;
 	}
 
 	get = async (url: string, options: Record<string, any> = {}) => {
@@ -69,12 +73,7 @@ export default class HTTPTransport {
 
 	delete = async (url: string, options: Record<string, any> = {}) => this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
 
-	request = async (url: string, options: Record<string, any>, timeout = 5000) => new Promise((resolve, reject) => {
-		const xhr = new XMLHttpRequest();
-		xhr.open(options.method, `${this.baseUrl}${url}`);
-		xhr.withCredentials = true;
-		xhr.timeout = timeout;
-
+	setHeaders(xhr: XMLHttpRequest, options: Record<string, any>) {
 		xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
 
 		if (options.headers) {
@@ -85,6 +84,15 @@ export default class HTTPTransport {
 		} else if (!options.data || !(options.data instanceof FormData)) {
 			xhr.setRequestHeader('Content-Type', 'application/json');
 		}
+	}
+
+	request = async (url: string, options: Record<string, any>, timeout = 5000) => new Promise((resolve, reject) => {
+		const xhr = new XMLHttpRequest();
+		xhr.open(options.method, `${this.baseUrl}${url}`);
+		xhr.withCredentials = true;
+		xhr.timeout = timeout;
+
+		this.setHeaders(xhr, options);
 
 		xhr.onload = () => {
 			resolve(xhr);

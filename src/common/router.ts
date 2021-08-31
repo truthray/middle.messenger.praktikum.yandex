@@ -2,7 +2,7 @@ import isEqual from '../utils/is-equal';
 import Block from './block';
 
 export class Route {
-	private block: Block | undefined;
+	block: Block | undefined;
 
 	constructor(private pathname: string, private readonly BlockClass: new () => Block) {}
 
@@ -35,8 +35,8 @@ export class Route {
 export class Router {
 	static instance: Router | undefined;
 
-	private readonly routes: Route[];
-	private notFound: Route | undefined;
+	readonly routes: Route[];
+	notFound: Route | undefined;
 	private readonly history: History;
 	private currentRoute: Route | undefined;
 

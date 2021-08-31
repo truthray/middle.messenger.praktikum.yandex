@@ -88,20 +88,23 @@ export default class ProfileArea extends Block {
 		});
 	}
 
-	async avatarHandler(e: {target: {files: File[]}}) {
-		if (e.target.files.length < 0) {
+	async avatarHandler(e: Event) {
+		const target = (e.target as HTMLInputElement);
+		if (!target) {
 			return;
 		}
 
-		const file = e.target.files[0];
-		if (file) {
-			const avatar = await (toBase64(file));
-			const formData = new FormData();
-			formData.append('avatar', file);
-			(this.props.avatar as Block).setProps({...(this.props.avatar as Block).props, url: avatar});
-			UserApi.updateAvatar(formData).catch(e => {
-				console.log(e);
-			});
+		if (target.files && target.files.length > 0) {
+			const file = target.files[0];
+			if (file) {
+				const avatar = await (toBase64(file));
+				const formData = new FormData();
+				formData.append('avatar', file);
+				(this.props.avatar as Block).setProps({...(this.props.avatar as Block).props, url: avatar});
+				UserApi.updateAvatar(formData).catch(e => {
+					console.log(e);
+				});
+			}
 		}
 	}
 

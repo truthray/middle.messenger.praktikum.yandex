@@ -6,7 +6,7 @@ import Signin from './pages/signin';
 import Signup from './pages/signup';
 
 window.onload = () => {
-	new Router('app')
+	new Router()
 		.use('/', Index)
 		.use('/signin', Signin)
 		.use('/signup', Signup)
