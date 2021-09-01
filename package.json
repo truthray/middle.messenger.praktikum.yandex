@@ -7,9 +7,9 @@
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main. Название pull request может быть любое.",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/parcel src/app.pug",
+    "dev": "./node_modules/.bin/parcel src/*.pug",
     "test": "./node_modules/.bin/mocha -r ts-node/register -r jsdom-global/register -r ignore-styles",
-    "build": "./node_modules/.bin/parcel build src/app.pug",
+    "build": "./node_modules/.bin/parcel build src/*.pug",
     "start": "./node_modules/.bin/parcel build src/*.pug & ts-node index.ts",
     "lint": "eslint . --ext .ts --fix",
     "stylelint": "npx stylelint '**/*.scss'"
