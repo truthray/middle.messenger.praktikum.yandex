@@ -10,7 +10,7 @@
     "dev": "./node_modules/.bin/parcel src/*.pug",
     "test": "./node_modules/.bin/mocha -r ts-node/register -r jsdom-global/register -r ignore-styles",
     "build": "./node_modules/.bin/parcel build src/*.pug",
-    "start": "./node_modules/.bin/parcel build src/*.pug & ts-node index.ts",
+    "start": "./node_modules/.bin/parcel build src/*.pug && ts-node index.ts",
     "lint": "eslint . --ext .ts --fix",
     "stylelint": "npx stylelint '**/*.scss'"
   },
