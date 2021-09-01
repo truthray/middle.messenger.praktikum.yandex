@@ -12,7 +12,6 @@ import StyledControlBtn from '../../components/base/styled-control-btn/styled-co
 import StyledInput from '../../components/base/styled-input/styled-input';
 import ChatArea from '../../components/chat-area/chat-area';
 import ProfileArea from '../../components/profile/profile';
-import {useRouter} from '../../common/router';
 import {useWebSocket} from '../../api-client/websocket';
 
 export default class IndexPage extends Block {
