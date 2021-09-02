@@ -21,7 +21,7 @@ describe('Проверяем компонент styled-input', () => {
 	it('Компонент корректно рендерится', () => {
         createInput();
         const app = document.getElementById('app')?.innerHTML;
-        expect(app).to.eq('<div class="styled-input"><label class="styled-input__label" for="Test">Test</label><input class="styled-input__input" id="Test" value="" tabindex="0"><div style="color: red"></div></div>');
+        expect(app).to.eq('<div class="styled-input"><label class="styled-input__label" for="Test">Test</label><input class="styled-input__input" id="Test" value="" tabindex="0"><div class="alert-msg"></div></div>');
 	});
 
     describe('Проверяем валидацию', () => {

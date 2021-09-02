@@ -59,7 +59,7 @@ describe('Проверка модуля запросов', () => {
 		it('Проверка, отправляются ли GET запросы', (done) => {
 			const client = new HTTPTransport('')
 			client.get('/', {data: {}}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).method).to.equal('GET');
+				expect((res as unknown as SinonFakeXMLHttpRequest).method).to.equal('GET');
 				done();
 			})
 			requests[0].respond(200, null, '');
@@ -68,7 +68,7 @@ describe('Проверка модуля запросов', () => {
 		it('Проверка, отправляются ли POST запросы', (done) => {
 			const client = new HTTPTransport('')
 			client.post('/', {data: {}}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).method).to.equal('POST');
+				expect((res as unknown as SinonFakeXMLHttpRequest).method).to.equal('POST');
 				done();
 			})
 			requests[0].respond(200, null, '');
@@ -77,7 +77,7 @@ describe('Проверка модуля запросов', () => {
 		it('Проверка, отправляются ли PUT запросы', (done) => {
 			const client = new HTTPTransport('')
 			client.put('/', {data: {}}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).method).to.equal('PUT');
+				expect((res as unknown as SinonFakeXMLHttpRequest).method).to.equal('PUT');
 				done();
 			})
 			requests[0].respond(200, null, '');
@@ -86,7 +86,7 @@ describe('Проверка модуля запросов', () => {
 		it('Проверка, отправляются ли DELETE запросы', (done) => {
 			const client = new HTTPTransport('')
 			client.delete('/', {data: {}}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).method).to.equal('DELETE');
+				expect((res as unknown as SinonFakeXMLHttpRequest).method).to.equal('DELETE');
 				done();
 			})
 			requests[0].respond(200, null, '');
@@ -95,7 +95,7 @@ describe('Проверка модуля запросов', () => {
 		it('Проверка подстановки queryString в GET запросах', (done) => {
 			const client = new HTTPTransport('')
 			client.get('/', {data: {a: 1}}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).url).to.equal('https://ya-praktikum.tech/api/v2/?a=1');
+				expect((res as unknown as SinonFakeXMLHttpRequest).url).to.equal('https://ya-praktikum.tech/api/v2/?a=1');
 				done();
 			})
 			requests[0].respond(200, null, '');
@@ -105,7 +105,7 @@ describe('Проверка модуля запросов', () => {
 			const client = new HTTPTransport('')
 			const formData = new FormData();
 			client.put('/', {data: formData}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).requestBody).to.equal(formData);
+				expect((res as unknown as SinonFakeXMLHttpRequest).requestBody).to.equal(formData);
 				done();
 			})
 			requests[0].respond(200, null, '');
@@ -114,7 +114,7 @@ describe('Проверка модуля запросов', () => {
 		it('Проверка на перевод объекта в строку', (done) => {
 			const client = new HTTPTransport('')
 			client.put('/', {data: {a: 1, b: 4}}).then((res) => {
-				expect((res as SinonFakeXMLHttpRequest).requestBody).to.equal('{"a":1,"b":4}');
+				expect((res as unknown as SinonFakeXMLHttpRequest).requestBody).to.equal('{"a":1,"b":4}');
 				done();
 			})
 			requests[0].respond(200, null, '');
