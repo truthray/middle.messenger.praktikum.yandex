@@ -2,6 +2,7 @@ import Block from '../../../common/block';
 import * as pug from 'pug';
 import {readFileSync} from 'fs';
 import './styled-input.scss';
+import {Rule} from '../../../utils/rules';
 
 export default class StyledInput extends Block {
 	public valid = true;
@@ -22,7 +23,7 @@ export default class StyledInput extends Block {
 
 	validate(isBlur = false): boolean {
 		if (this.props.rules && Array.isArray(this.props.rules)) {
-			const error = (this.props.rules as Array<{rule: RegExp; msg: string}>).find((rule: {rule: RegExp; msg: string}) => !rule.rule.test(this.props.value));
+			const error = (this.props.rules as Rule[]).find((rule: {rule: RegExp; msg: string}) => !rule.rule.test(this.props.value));
 
 			if (error) {
 				this.valid = false;

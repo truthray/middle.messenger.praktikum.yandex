@@ -4,7 +4,7 @@
             .profile__block__avatar
                 //- form(id='avatar-form')
                 | !{avatar}
-                input(id='avatar_input', style="display: none", type='file')
+                input(id='person_avatar_input', style="display: none", type='file')
         .profile__block
             | !{emailInput}
         .profile__block
@@ -21,7 +21,10 @@
             .profile__btn-block
                 div
                     | !{saveBtn}
-    form(action='/index.html',method='get')
+                if (showUpdateAnimation)
+                    .checkmark
+
+    form(action='/index.html', method='get')
         .profile__block
             | !{newPasswordInput}
         .profile__block
@@ -30,5 +33,7 @@
             .profile__btn-block
                 div
                     | !{pwdBtn}
+                if (showPasswordUpdateAnimation)
+                    .checkmark
                 div
                     | !{exitBtn}

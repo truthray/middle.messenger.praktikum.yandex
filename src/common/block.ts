@@ -8,7 +8,7 @@ enum EVENTS {
 	FLOW_RENDER = 'flow:render',
 }
 
-type Props = Record<string, any>;
+type Props = Record<string, any | Block>;
 
 export default class Block {
 	public readonly props: Props;

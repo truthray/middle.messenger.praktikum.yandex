@@ -9,28 +9,31 @@ import StyledControlBtn from '../base/styled-control-btn/styled-control-btn';
 import {toBase64} from '../../utils/toBase64';
 
 export default class ChatPerson extends Block {
+	private readonly avatar = new Avatar({events: {click: () => {
+		const avatarInput = document.getElementById('avatar_input');
+		avatarInput?.removeEventListener('input', this.avatarHandler);
+		avatarInput?.addEventListener('input', this.avatarHandler);
+		avatarInput?.click();
+	}}});
+
+	private readonly plusBtn = new StyledControlBtn({label: '+'});
+	private readonly unreadBtn = new StyledControlBtn({});
+
 	constructor(props: any) {
 		super('div', {
 			...props,
-			avatar: new Avatar({events: {click: () => {
-				const avatarInput = document.getElementById('avatar_input');
-				avatarInput?.removeEventListener('input', this.avatarHandler);
-				avatarInput?.addEventListener('input', this.avatarHandler);
-				avatarInput?.click();
-			}}}),
-			plusBtn: new StyledControlBtn({label: '+'}),
-			unreadBtn: new StyledControlBtn({}),
 		});
+		this.setProps({...this.props, avatar: this.avatar, plusBtn: this.plusBtn, unreadBtn: this.unreadBtn});
 		this.avatarHandler = this.avatarHandler.bind(this);
 		// (this.props.avatar as Block).setProps({...(this.props.avatar as Block).props, url: `https://ya-praktikum.tech/api/v2/resources/${(this.props.chat as Chat).avatar}`});
-		(this.props.unreadBtn as Block).setProps({...(this.props.unreadBtn as Block).props, label: (this.props.chat as Chat)?.unread_count});
+		this.unreadBtn.setProps({...this.unreadBtn.props, label: (this.props.chat as Chat)?.unread_count});
 	}
 
 	componentDidMount() {
 		if (this.props.chat) {
 			const chat = this.props.chat as Chat;
 			if (chat.avatar) {
-				(this.props.avatar as Block).setProps({...(this.props.avatar as Block).props, url: `https://ya-praktikum.tech/api/v2/resources/${chat.avatar}`});
+				this.avatar.setProps({...this.avatar.props, url: `https://ya-praktikum.tech/api/v2/resources/${chat.avatar}`});
 			}
 		}
 	}
@@ -48,7 +51,7 @@ export default class ChatPerson extends Block {
 				const formData = new FormData();
 				formData.append('avatar', file);
 				formData.append('chatId', (this.props.chat as Chat).id.toString());
-				(this.props.avatar as Block).setProps({...(this.props.avatar as Block).props, url: avatar});
+				this.avatar.setProps({...this.avatar.props, url: avatar});
 				ChatApi.updateAvatar(formData).catch(e => {
 					console.log(e);
 				});
@@ -60,9 +63,9 @@ export default class ChatPerson extends Block {
 		const file = readFileSync(__dirname + '/chat-person.pug', 'utf8');
 		const html = pug.render(file, {
 			...this.props,
-			avatar: (this.props.avatar as Block).blockWithId(),
-			plusBtn: (this.props.plusBtn as Block).blockWithId(),
-			unreadBtn: (this.props.unreadBtn as Block).blockWithId(),
+			avatar: this.avatar.blockWithId(),
+			plusBtn: this.plusBtn.blockWithId(),
+			unreadBtn: this.unreadBtn.blockWithId(),
 		});
 		return html;
 	}

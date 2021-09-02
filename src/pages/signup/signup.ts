@@ -11,38 +11,46 @@ import StyledInput from '../../components/base/styled-input/styled-input';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
 
 export default class SignupPage extends Block {
+	private readonly emailInput = new StyledInput({label: 'Email', rules: [{rule: emailRule, msg: 'Email должен соответствовать шаблону'}]});
+	private readonly loginInput = new StyledInput({label: 'Логин', rules: [{rule: sixSymbolsRule, msg: 'Логин должен быть больше 6 символов'}]});
+	private readonly phoneInput = new StyledInput({label: 'Телефон', rules: [{rule: phoneRule, msg: 'Телефон должен соответствовать шаблону'}]});
+	private readonly nameInput = new StyledInput({label: 'Имя', rules: [{rule: sixSymbolsRule, msg: 'Имя должно быть больше 6 символов'}]});
+	private readonly surnameInput = new StyledInput({label: 'Фамилия', rules: [{rule: sixSymbolsRule, msg: 'Фамилия должна быть больше 6 символов'}]});
+	private readonly passwordInput = new StyledInput({label: 'Пароль', isPassword: true, rules: [{rule: sixSymbolsRule, msg: 'Пароль должен быть больше 6 символов'}]});
+	private readonly passwordAgainInput = new StyledInput({label: 'Пароль (еще раз)', isPassword: true, rules: [{rule: sixSymbolsRule, msg: 'Пароль должен быть больше 6 символов'}]});
+	private readonly signUpBtn = new StyledBtn({});
+	private readonly signInBtn = new StyledBtn({
+		label: 'Войти',
+		type: 'button',
+		events: {
+			click: (e: Event) => {
+				e.preventDefault();
+				useRouter()?.go('/');
+			},
+		},
+	});
+
 	constructor() {
-		super('div', {
-			emailInput: new StyledInput({label: 'Email', rules: [{rule: emailRule, msg: 'Email должен соответствовать шаблону'}]}),
-			loginInput: new StyledInput({label: 'Логин', rules: [{rule: sixSymbolsRule, msg: 'Логин должен быть больше 6 символов'}]}),
-			phoneInput: new StyledInput({label: 'Телефон', rules: [{rule: phoneRule, msg: 'Телефон должен соответствовать шаблону'}]}),
-			nameInput: new StyledInput({label: 'Имя', rules: [{rule: sixSymbolsRule, msg: 'Имя должно быть больше 6 символов'}]}),
-			surnameInput: new StyledInput({label: 'Фамилия', rules: [{rule: sixSymbolsRule, msg: 'Фамилия должна быть больше 6 символов'}]}),
-			passwordInput: new StyledInput({label: 'Пароль', isPassword: true, rules: [{rule: sixSymbolsRule, msg: 'Пароль должен быть больше 6 символов'}]}),
-			passwordAgainInput: new StyledInput({label: 'Пароль (еще раз)', isPassword: true, rules: [{rule: sixSymbolsRule, msg: 'Пароль должен быть больше 6 символов'}]}),
-			signInBtn: new StyledBtn({label: 'Войти', type: 'button', events: {
-				click: (e: Event) => {
-					e.preventDefault();
-					useRouter()?.go('/');
-				},
-			}}),
-			signUpBtn: new StyledBtn({}),
+		super('div', {});
+		this.setProps({
+			...this.props, emailInput: this.emailInput, loginInput: this.loginInput, phoneInput: this.phoneInput, nameInput: this.nameInput, surnameInput: this.surnameInput,
+			passwordInput: this.passwordInput, passwordAgainInput: this.passwordAgainInput, signUpBtn: this.signUpBtn, signInBtn: this.signInBtn,
 		});
 
 		(this.props.signUpBtn as Block).setProps({
 			label: 'Зарегистрироваться',
 			type: 'submit',
-			fields: [this.props.emailInput, this.props.loginInput, this.props.nameInput, this.props.surnameInput, this.props.phoneInput, this.props.passwordInput, this.props.passwordAgainInput],
+			fields: [this.emailInput, this.loginInput, this.nameInput, this.surnameInput, this.phoneInput, this.passwordInput, this.passwordAgainInput],
 			events: {
 				click: (e: Event) => {
 					e.preventDefault();
 					const user: NewUserDto = {
-						first_name: (this.props.nameInput as StyledInput).value,
-						second_name: (this.props.surnameInput as StyledInput).value,
-						login: (this.props.loginInput as StyledInput).value,
-						email: (this.props.emailInput as StyledInput).value,
-						password: (this.props.passwordInput as StyledInput).value,
-						phone: (this.props.phoneInput as StyledInput).value,
+						first_name: this.nameInput.value,
+						second_name: this.surnameInput.value,
+						login: this.loginInput.value,
+						email: this.emailInput.value,
+						password: this.passwordInput.value,
+						phone: this.phoneInput.value,
 					};
 
 					AuthApi.signup(user).then(() => {
@@ -57,15 +65,15 @@ export default class SignupPage extends Block {
 	render() {
 		const file = readFileSync(__dirname + '/signup.pug', 'utf8');
 		const html = pug.render(file, {
-			emailInput: (this.props.emailInput as Block).blockWithId(),
-			loginInput: (this.props.loginInput as Block).blockWithId(),
-			phoneInput: (this.props.phoneInput as Block).blockWithId(),
-			nameInput: (this.props.nameInput as Block).blockWithId(),
-			surnameInput: (this.props.surnameInput as Block).blockWithId(),
-			passwordInput: (this.props.passwordInput as Block).blockWithId(),
-			passwordAgainInput: (this.props.passwordAgainInput as Block).blockWithId(),
-			signInBtn: (this.props.signInBtn as Block).blockWithId(),
-			signUpBtn: (this.props.signUpBtn as Block).blockWithId(),
+			emailInput: this.emailInput.blockWithId(),
+			loginInput: this.loginInput.blockWithId(),
+			phoneInput: this.phoneInput.blockWithId(),
+			nameInput: this.nameInput.blockWithId(),
+			surnameInput: this.surnameInput.blockWithId(),
+			passwordInput: this.passwordInput.blockWithId(),
+			passwordAgainInput: this.passwordAgainInput.blockWithId(),
+			signInBtn: this.signInBtn.blockWithId(),
+			signUpBtn: this.signUpBtn.blockWithId(),
 		});
 		window.onload = () => {
 			compile(html);

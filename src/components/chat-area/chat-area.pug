@@ -1,10 +1,10 @@
 .chat-container
-    div(style='display: flex; justify-content: space-between')
-            div(style='padding: 0 8 8')
+    .chat-container__header
+            .chat-container__header__select
                 select.user-list
                     each user in users
                         option #{user.display_name}
-            li(style='display: flex; justify-content: space-between;')
+            li(class='chat-container__header__btns')
                 .self-align-center
                     | !{minusBtn}
                 div(class='margin: 10px;')

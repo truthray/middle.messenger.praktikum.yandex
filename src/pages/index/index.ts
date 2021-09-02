@@ -13,44 +13,68 @@ import StyledInput from '../../components/base/styled-input/styled-input';
 import ChatArea from '../../components/chat-area/chat-area';
 import ProfileArea from '../../components/profile/profile';
 import {useWebSocket} from '../../api-client/websocket';
+import {useRouter} from '../../common/router';
 
 export default class IndexPage extends Block {
 	private active = 0;
 	private socket: WebSocket | undefined = undefined;
+
+	private readonly chatPerson = new ChatPerson({
+		chat: {
+			id: 0,
+			title: 'Профиль',
+			avatar: '',
+		},
+		events: {click: (e: Event) => {
+			this.changeActive(Number((e.target as HTMLElement).id || 1));
+		}},
+	});
+
+	private readonly minusBtn = new StyledControlBtn({label: '-'});
+	private readonly plusBtn = new StyledControlBtn({label: '+'});
+	private readonly titleInput = new StyledInput({label: 'Название чата'});
+	private readonly chatArea = new ChatArea();
+	private chatPersons: ChatPerson[] = [];
+	private readonly profile = new ProfileArea(this.fetchUser);
+
 	constructor() {
 		super('div', {
 			chats: [],
 			person,
 			messages: [],
-
-			chatPerson: new ChatPerson({chat: {
-				id: 0,
-				title: 'Профиль',
-				avatar: 'https://w7.pngwing.com/pngs/841/727/png-transparent-computer-icons-user-profile-synonyms-and-antonyms-android-android-computer-wallpaper-monochrome-sphere.png',
-			}, events: {click: (e: Event) => {
-				this.changeActive(e);
-			}}}),
-			minusBtn: new StyledControlBtn({label: '-'}),
-			plusBtn: new StyledControlBtn({label: '+'}),
-			titleInput: new StyledInput({label: 'Название чата'}),
-			chatArea: new ChatArea(),
-			chatPersons: [],
-			profile: new ProfileArea(),
 		});
+		this.setProps({
+			...this.props,
+			chatPerson: this.chatPerson,
+			minusBtn: this.minusBtn,
+			plusBtn: this.plusBtn,
+			titleInput: this.titleInput,
+			chatArea: this.chatArea,
+			chatPersons: this.chatPersons,
+			profile: this.profile,
+		});
+
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onMessage = this.onMessage.bind(this);
 		this.onOpen = this.onOpen.bind(this);
+		this.fetchUser = this.fetchUser.bind(this);
 		this.plusClickHandler = this.plusClickHandler.bind(this);
 		this.minusClickHandler = this.minusClickHandler.bind(this);
-		(this.props.plusBtn as Block).setProps({...(this.props.plusBtn as Block).props, events: {click: this.plusClickHandler}});
-		(this.props.minusBtn as Block).setProps({...(this.props.minusBtn as Block).props, events: {click: this.minusClickHandler}});
-		(this.props.chatPerson as Block).setProps({...(this.props.chatPerson as Block).props, active: this.active});
-		(this.props.chatArea as Block).setProps({...(this.props.chatArea as Block).props, sendMessage: this.sendMessage});
-		(this.props.chatPersons as Block[]).forEach((x: Block) => {
+		this.plusBtn.setProps({...this.plusBtn.props, events: {click: this.plusClickHandler}});
+		this.minusBtn.setProps({...this.minusBtn.props, events: {click: this.minusClickHandler}});
+		this.chatPerson.setProps({...this.chatPerson.props, active: this.active});
+		this.chatArea.setProps({...this.chatArea.props, sendMessage: this.sendMessage});
+		this.chatPersons.forEach((x: Block) => {
 			x.setProps({...x.props, active: this.active});
 		});
 		this.changeActive = this.changeActive.bind(this);
-		this.setProps({...this.props, changeActive: this.changeActive, active: this.active});
+
+		const queryParams = useRouter()?.queryParams;
+		if (queryParams?.id) {
+			this.setActive(Number(queryParams?.id));
+		} else {
+			this.setProps({...this.props, changeActive: this.changeActive, active: this.active});
+		}
 	}
 
 	componentDidMount() {
@@ -60,12 +84,12 @@ export default class IndexPage extends Block {
 
 	fetchUser() {
 		AuthApi.user().then(user => {
-			if ((user as XMLHttpRequest).status === 200) {
-				const parsed = JSON.parse((user as XMLHttpRequest).response) as UserDto;
-				(this.props.profile as Block).setProps({...(this.props.profile as Block).props, user: parsed});
-				(this.props.chatArea as Block).setProps({...(this.props.chatArea as Block).props, userId: parsed.id});
+			if (user.status === 200) {
+				const parsed = JSON.parse(user.response) as UserDto;
+				this.profile.setProps({...this.profile.props, user: parsed});
+				this.chatArea.setProps({...this.chatArea.props, userId: parsed.id});
 
-				(this.props.chatPerson as Block).setProps({...(this.props.chatPerson as Block).props, chat: {
+				this.chatPerson.setProps({...this.chatPerson.props, chat: {
 					id: 0,
 					title: 'Профиль',
 					avatar: parsed.avatar,
@@ -73,8 +97,8 @@ export default class IndexPage extends Block {
 
 				this.props.userId = parsed.id;
 			}
-			// else if ((user as XMLHttpRequest).status === 401) {
-				// useRouter()?.go('/');
+			// Else if ((user as XMLHttpRequest).status === 401) {
+			// useRouter()?.go('/');
 			// }
 		}).catch(e => {
 			console.log('error: ', e);
@@ -101,7 +125,7 @@ export default class IndexPage extends Block {
 			}
 		}
 
-		(this.props.chatArea as Block).setProps({...(this.props.chatArea as Block).props, messages: this.props.messages as any[]});
+		this.chatArea.setProps({...this.chatArea.props, messages: this.props.messages as any[]});
 	}
 
 	onOpen() {
@@ -114,7 +138,7 @@ export default class IndexPage extends Block {
 	createSocket() {
 		ChatApi.getToken(this.props.active)
 			.then(response => {
-				const token = JSON.parse((response as XMLHttpRequest).response) as {token: string};
+				const token = JSON.parse(response.response) as {token: string};
 				if (token && this.props.userId && this.props.active > 1) {
 					this.socket?.close();
 					this.socket = useWebSocket(this.props.active, this.props.userId, token.token, this.onOpen, this.onMessage);
@@ -128,21 +152,23 @@ export default class IndexPage extends Block {
 
 	fetchChats() {
 		ChatApi.chats().then(response => {
-			if ((response as XMLHttpRequest).status === 200) {
-				const chats = JSON.parse((response as XMLHttpRequest).response) as Chat[];
-				if (chats.length !== this.props.chatPersons.length) {
+			if (response.status === 200) {
+				const chats = JSON.parse(response.response) as Chat[];
+				if (chats.length !== (this.props.chatPersons as any[]).length) {
+					this.chatPersons = chats.map(chat => new ChatPerson({
+						chat,
+						active: this.active,
+						events: {
+							click: (e: Event) => {
+								this.changeActive(Number((e.target as HTMLElement).id || 1));
+							},
+						},
+					}));
+
 					this.setProps({
 						...this.props,
 						chats,
-						chatPersons: chats.map(chat => new ChatPerson({
-							chat,
-							active: this.active,
-							events: {
-								click: (e: Event) => {
-									this.changeActive(e);
-								},
-							},
-						})),
+						chatPersons: this.chatPersons,
 					});
 				}
 			}
@@ -151,22 +177,27 @@ export default class IndexPage extends Block {
 		});
 	}
 
-	changeActive(e: Event) {
+	changeActive(id: number) {
+		useRouter()?.go('/messenger', {id});
+		this.setActive(id);
+	}
+
+	setActive(id: number) {
 		this.props.messages = [];
-		this.active = Number((e.target as HTMLElement).id || 1);
-		(this.props.chatPerson as Block).setProps({...(this.props.chatPerson as Block).props, active: this.active});
-		(this.props.chatPersons as Block[]).forEach((x: Block) => {
+		this.active = id;
+		this.chatPerson.setProps({...this.chatPerson.props, active: this.active});
+		this.chatPersons.forEach((x: Block) => {
 			x.setProps({...x.props, active: this.active});
 		});
-		(this.props.chatArea as Block).setProps({...(this.props.chatArea as Block).props, active: this.active, messages: []});
-		(this.props.chatArea as ChatArea).fetchUsers();
+		this.chatArea.setProps({...this.chatArea.props, active: this.active, messages: []});
+		this.chatArea.fetchUsers();
 		this.setProps({...this.props, active: this.active});
 		this.createSocket();
 	}
 
 	plusClickHandler() {
-		ChatApi.create((this.props.titleInput as StyledInput).value).then(() => {
-			(this.props.titleInput as StyledInput).setProps({...(this.props.titleInput as Block).props, value: ''});
+		ChatApi.create(this.titleInput.value).then(() => {
+			this.titleInput.setProps({...this.titleInput.props, value: ''});
 			this.fetchChats();
 		}).catch(e => {
 			console.log(e);
@@ -174,20 +205,20 @@ export default class IndexPage extends Block {
 	}
 
 	minusClickHandler() {
-		(this.props.titleInput as StyledInput).setProps({...(this.props.titleInput as Block).props, value: ''});
+		this.titleInput.setProps({...this.titleInput.props, value: ''});
 	}
 
 	render() {
 		const file = readFileSync(__dirname + '/index.pug', 'utf8');
 		const html = pug.render(file, {
 			...this.props,
-			chatPerson: (this.props.chatPerson as Block).blockWithId(),
-			minusBtn: (this.props.minusBtn as Block).blockWithId(),
-			plusBtn: (this.props.plusBtn as Block).blockWithId(),
-			titleInput: (this.props.titleInput as Block).blockWithId(),
-			chatArea: (this.props.chatArea as Block).blockWithId(),
-			chatPersons: (this.props.chatPersons as Block[]).map((x: Block) => x.blockWithId()),
-			profile: (this.props.profile as Block).blockWithId(),
+			chatPerson: this.chatPerson.blockWithId(),
+			minusBtn: this.minusBtn.blockWithId(),
+			plusBtn: this.plusBtn.blockWithId(),
+			titleInput: this.titleInput.blockWithId(),
+			chatArea: this.chatArea.blockWithId(),
+			chatPersons: this.chatPersons.map((x: Block) => x.blockWithId()),
+			profile: this.profile.blockWithId(),
 		});
 
 		return html;

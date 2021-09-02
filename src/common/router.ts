@@ -3,6 +3,7 @@ import Block from './block';
 
 export class Route {
 	block: Block | undefined;
+	private params: string | number | undefined = undefined;
 
 	constructor(private pathname: string, private readonly BlockClass: new () => Block) {}
 
@@ -11,6 +12,14 @@ export class Route {
 			this.pathname = pathname;
 			this.render();
 		}
+	}
+
+	setParams(value: number | string | undefined) {
+		this.params = value;
+	}
+
+	get pathParams() {
+		return this.params;
 	}
 
 	leave() {
@@ -94,9 +103,14 @@ export class Router {
 		this.currentRoute?.render();
 	}
 
-	go(pathname: string) {
-		this.history.pushState({}, '', pathname);
+	go(pathname: string, params: Record<string, any> | undefined = {}) {
+		this.history.pushState(params, '', pathname);
 		this._onRoute(pathname);
+	}
+
+	get queryParams(): Record<string, any> {
+		const current = this.history.state as Record<string, any>;
+		return current;
 	}
 
 	back() {

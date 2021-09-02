@@ -86,7 +86,7 @@ export default class HTTPTransport {
 		}
 	}
 
-	request = async (url: string, options: Record<string, any>, timeout = 5000) => new Promise((resolve, reject) => {
+	request = async (url: string, options: Record<string, any>, timeout = 5000) => new Promise<XMLHttpRequest>((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
 		xhr.open(options.method, `${this.baseUrl}${url}`);
 		xhr.withCredentials = true;
