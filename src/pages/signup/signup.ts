@@ -37,13 +37,17 @@ export default class SignupPage extends Block {
 			passwordInput: this.passwordInput, passwordAgainInput: this.passwordAgainInput, signUpBtn: this.signUpBtn, signInBtn: this.signInBtn,
 		});
 
-		(this.props.signUpBtn as Block).setProps({
+		this.signUpBtn.setProps({
 			label: 'Зарегистрироваться',
 			type: 'submit',
 			fields: [this.emailInput, this.loginInput, this.nameInput, this.surnameInput, this.phoneInput, this.passwordInput, this.passwordAgainInput],
 			events: {
 				click: (e: Event) => {
 					e.preventDefault();
+					if (!this.signUpBtn.validate()) {
+						return;
+					}
+
 					const user: NewUserDto = {
 						first_name: this.nameInput.value,
 						second_name: this.surnameInput.value,
@@ -53,8 +57,10 @@ export default class SignupPage extends Block {
 						phone: this.phoneInput.value,
 					};
 
-					AuthApi.signup(user).then(() => {
-						useRouter()?.go('/messenger');
+					AuthApi.signup(user).then(res => {
+						if (res.status === 200) {
+							useRouter()?.go('/messenger');
+						}
 					}).catch(e => {
 						console.log(e);
 					});

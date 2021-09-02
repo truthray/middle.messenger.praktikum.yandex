@@ -29,12 +29,16 @@ export default class SigninPage extends Block {
 		this.signInBtn.setProps({label: 'Войти', type: 'submit', fields: [this.loginInput, this.passwordInput], events: {
 			click: (e: Event) => {
 				e.preventDefault();
+				if (!this.signInBtn.validate()) {
+					return;
+				}
+
 				const user: UserInfo = {
 					login: this.loginInput.value,
 					password: this.passwordInput.value,
 				};
 				AuthApi.signin(user).then(e => {
-					if ((e).status === 200) {
+					if (e.status === 200) {
 						useRouter()?.go('/messenger');
 					}
 				}).catch(e => {

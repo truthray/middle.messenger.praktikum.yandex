@@ -60,6 +60,9 @@ export default class ProfileArea extends Block {
 			events: {
 				click: (e: Event) => {
 					e.preventDefault();
+					if (!this.saveBtn.validate()) {
+						return;
+					}
 
 					const user: EditUserDto = {
 						first_name: this.nameInput.value,
@@ -88,6 +91,9 @@ export default class ProfileArea extends Block {
 			events: {
 				click: (e: Event) => {
 					e.preventDefault();
+					if (!this.pwdBtn.validate()) {
+						return;
+					}
 
 					const pwd: PasswordDto = {newPassword: this.newPasswordInput.value, oldPassword: this.oldPasswordInput.value};
 					UserApi.updatePassword(pwd)

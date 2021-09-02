@@ -21,9 +21,10 @@ export default class StyledInput extends Block {
 		return (this.props.value as string);
 	}
 
-	validate(isBlur = false): boolean {
+	validate(blur = false): boolean {
 		if (this.props.rules && Array.isArray(this.props.rules)) {
 			const error = (this.props.rules as Rule[]).find((rule: {rule: RegExp; msg: string}) => !rule.rule.test(this.props.value));
+			const currentPos = this.field?.selectionStart;
 
 			if (error) {
 				this.valid = false;
@@ -43,8 +44,8 @@ export default class StyledInput extends Block {
 				});
 			}
 
-			if (!isBlur) {
-				this.field?.setSelectionRange(this.field?.value.length, this.field?.value.length);
+			if (currentPos && !blur) {
+				this.field?.setSelectionRange(currentPos, currentPos);
 				this.field?.focus();
 			}
 

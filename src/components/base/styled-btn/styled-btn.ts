@@ -11,24 +11,25 @@ export default class StyledBtn extends Block {
 	}
 
 	componentDidMount() {
-		if (this.props.type) {
-			const btn = this.getContent()?.getElementsByTagName('button')[0];
-			btn?.addEventListener('click', this.validate);
-		}
+		// If (this.props.type) {
+		// const btn = this.getContent()?.getElementsByTagName('button')[0];
+		// btn?.addEventListener('click', this.validate);
+		// }
 	}
 
-	validate(e: Event) {
+	validate(): boolean {
 		if (this.props.fields) {
 			for (const field of this.props.fields) {
 				const input = field as StyledInput;
 				const isValid = input.validate();
 				if (!isValid) {
-					e.preventDefault();
 					input.focus();
-					break;
+					return false;
 				}
 			}
 		}
+
+		return true;
 	}
 
 	render() {
