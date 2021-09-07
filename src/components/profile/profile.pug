@@ -1,8 +1,10 @@
 .profile 
-    form(action='/index.html',method='get')
+    form(action='/index.html', method='get')
         .profile__block
-            .profile__block__avatar 
+            .profile__block__avatar
+                //- form(id='avatar-form')
                 | !{avatar}
+                input(id='person_avatar_input', style="display: none", type='file')
         .profile__block
             | !{emailInput}
         .profile__block
@@ -12,7 +14,17 @@
         .profile__block
             | !{surnameInput}
         .profile__block
+            | !{displayNameInput}
+        .profile__block
             | !{phoneInput}
+        .profile__block
+            .profile__btn-block
+                div
+                    | !{saveBtn}
+                if (showUpdateAnimation)
+                    .checkmark
+
+    form(action='/index.html', method='get')
         .profile__block
             | !{newPasswordInput}
         .profile__block
@@ -20,7 +32,8 @@
         .profile__block
             .profile__btn-block
                 div
-                    | !{saveBtn}
+                    | !{pwdBtn}
+                if (showPasswordUpdateAnimation)
+                    .checkmark
                 div
                     | !{exitBtn}
-        input(id='avatar_input', style="display: none", type='file')

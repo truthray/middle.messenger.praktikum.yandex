@@ -28,4 +28,10 @@ body {
     padding: 20px;
     height: 100%;
   }
+
+  &__new-chat {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
 }

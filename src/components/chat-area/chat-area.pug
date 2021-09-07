@@ -1,14 +1,26 @@
 .chat-container
-    div
-        each message in messages
-            if (message.date !== currentDate)
-                - currentDate = message.date
-                .message-date #{message.date}
-            .message-block(class=message.self ? 'message-block--self' : null)
-                if (!message.self)
+    .chat-container__header
+            .chat-container__header__select
+                select.user-list
+                    each user in users
+                        option #{user.display_name}
+            li(class='chat-container__header__btns')
+                .self-align-center
+                    | !{minusBtn}
+                div(class='margin: 10px;')
+                    | !{loginInput}
+                .self-align-center
+                    | !{plusBtn}
+    .scroll-area(id='scrollmessages')
+        each message, index in messages
+            .message-block(class=message.user_id == userId ? 'message-block--self' : null)
+                if (message.user_id != userId)
                     | !{friendAvatar}
                 div 
-                    | !{messageAreas[message.id]}
-                if (message.self)
+                    | !{messageAreas[index]}
+                if (message.user_id == userId)
                     | !{selfAvatar}
+            //- if (message.time.slice(0, 10) !== currentDate)
+                - currentDate = message.time.slice(0, 10)
+                .message-date #{message.time.slice(0, 10)}
     | !{newMessageArea}

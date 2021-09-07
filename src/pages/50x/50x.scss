@@ -12,6 +12,7 @@ body {
 
 .error-title {
   display: flex;
+  margin-top: calc(50vh - 30px);
   justify-content: center;
   color: $labelPrimary;
   font-size: 1rem;

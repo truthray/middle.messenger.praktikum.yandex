@@ -2,16 +2,14 @@
     ul.main-page__friends-list
         div(style='width: 100%;')
             | !{chatPerson}
-        li(style='display: flex; justify-content: space-between; padding: 10px 20px;')
-            .self-align-center
-                | !{minusBtn}
+        li(class='main-page__new-chat')
             div(class='margin: 10px;')
-                | !{loginInput}
+                | !{titleInput}
             .self-align-center
                 | !{plusBtn}
-        each friend in persons
-            div(style='width: 100%', id=friend.id)
-                | !{chatPersons[friend.id - 2]}
+        each chat, index in chats
+            div(style='width: 100%', id=chat.id)
+                | !{chatPersons[index]}
     .main-page__chat-area(id='chat-area')
         if active === person.id
             | !{profile}

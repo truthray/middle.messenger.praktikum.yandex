@@ -7,36 +7,41 @@ import StyledBtn from '../base/styled-btn/styled-btn';
 import MessageInput from '../base/message-input/message-input';
 
 export default class NewMessageArea extends Block {
+	private readonly addFileBtn = new StyledControlBtn({label: '+', events: {click: () => {
+		document.getElementById('file_input')?.click();
+	}}});
+
+	private readonly sendBtn = new StyledBtn({label: 'Отправить', type: 'submit'});
+	private readonly messageInput = new MessageInput({value: ''});
+
 	constructor(props: any) {
 		super('div', {
 			...props,
-			addFileBtn: new StyledControlBtn({label: '+', events: {click: () => {
-				document.getElementById('file_input')?.click();
-			}}}),
-			sendBtn: new StyledBtn({label: 'Отправить', type: 'submit'}),
-			messageInput: new MessageInput({value: ''}),
 		});
+
+		this.setProps({...this.props, addFileBtn: this.addFileBtn, sendBtn: this.sendBtn, messageInput: this.messageInput});
 		this.sendMessage = this.sendMessage.bind(this);
 
-		(this.props.sendBtn as Block).setProps({...(this.props.sendBtn as Block).props, events: {click: this.sendMessage}});
+		this.sendBtn.setProps({...this.sendBtn.props, events: {click: this.sendMessage}});
 	}
 
 	sendMessage(e: Event) {
-        e.preventDefault();
-        const value = (this.props.messageInput as MessageInput).getValue();
-        if (value) {
-            console.log('Сообщение: ', value);
-            (this.props.messageInput as MessageInput).setProps({...(this.props.messageInput as Block).props, value: ''});
-        }
+		e.preventDefault();
+		const value = this.messageInput.getValue();
+		if (value && this.props.sendMessage) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			this.props.sendMessage(value);
+			this.messageInput.setProps({...this.messageInput.props, value: ''});
+		}
 	}
 
 	render() {
 		const file = readFileSync(__dirname + '/new-message-area.pug', 'utf8');
 		const html = pug.render(file, {
 			...this.props,
-			addFileBtn: (this.props.addFileBtn as Block).blockWithId(),
-			sendBtn: (this.props.sendBtn as Block).blockWithId(),
-			messageInput: (this.props.messageInput as Block).blockWithId(),
+			addFileBtn: this.addFileBtn.blockWithId(),
+			sendBtn: this.sendBtn.blockWithId(),
+			messageInput: this.messageInput.blockWithId(),
 		});
 
 		return html;

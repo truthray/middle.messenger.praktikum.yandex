@@ -1,0 +1,6 @@
+{
+  "extension": ["ts", "js"],
+  "spec": "src/**/*.spec.*",
+  "require": "babel-register.js",
+  "testURL": "https://ya-praktikum.tech/api/v2"
+} 

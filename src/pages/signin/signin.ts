@@ -1,4 +1,6 @@
-import {sixSymbolsRule} from './../../utils/rules';
+import {UserInfo} from './../../models/user';
+import {AuthApi} from '../../api/auth-api';
+import {useRouter} from './../../common/router';
 import * as pug from 'pug';
 import Block from '../../common/block';
 import './signin.scss';
@@ -7,23 +9,41 @@ import StyledInput from '../../components/base/styled-input/styled-input';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
 
 export default class SigninPage extends Block {
-	constructor() {
-		super('div', {
-			loginInput: new StyledInput({label: 'Логин', rules: [{rule: sixSymbolsRule, msg: 'Логин должен быть больше 6 символов'}]}),
-			passwordInput: new StyledInput({label: 'Пароль', rules: [{rule: sixSymbolsRule, msg: 'Пароль должен быть больше 6 символов'}], isPassword: true}),
-			signInBtn: new StyledBtn({}),
-			signUpBtn: new StyledBtn({label: 'Зарегистрироваться', type: 'button', events: {
-				click: (e: Event) => {
-					e.preventDefault();
-					window.location.href = '/signup.html';
-				},
-			}}),
-		});
+	private readonly loginInput = new StyledInput({label: 'Логин'});
+	private readonly passwordInput = new StyledInput({label: 'Пароль', isPassword: true});
+	private readonly signInBtn = new StyledBtn({});
+	private readonly signUpBtn = new StyledBtn({
+		label: 'Зарегистрироваться',
+		type: 'button',
+		events: {
+			click: (e: Event) => {
+				e.preventDefault();
+				useRouter()?.go('/sign-up');
+			},
+		},
+	});
 
-		(this.props.signInBtn as Block).setProps({label: 'Войти', type: 'submit', fields: [this.props.loginInput, this.props.passwordInput], events: {
-			click: () => {
-				console.log(`Вход: Логин - ${(this.props.loginInput as StyledInput).value}, Пароль - ${(this.props.passwordInput as StyledInput).value}`);
-				// Window.location.href = '/index.html';
+	constructor() {
+		super('div', {});
+		this.setProps({...this.props, loginInput: this.loginInput, passwordInput: this.passwordInput, signInBtn: this.signInBtn, signUpBtn: this.signUpBtn});
+		this.signInBtn.setProps({label: 'Войти', type: 'submit', fields: [this.loginInput, this.passwordInput], events: {
+			click: (e: Event) => {
+				e.preventDefault();
+				if (!this.signInBtn.validate()) {
+					return;
+				}
+
+				const user: UserInfo = {
+					login: this.loginInput.value,
+					password: this.passwordInput.value,
+				};
+				AuthApi.signin(user).then(e => {
+					if (e.status === 200) {
+						useRouter()?.go('/messenger');
+					}
+				}).catch(e => {
+					console.log(e);
+				});
 			},
 		}});
 	}
@@ -32,10 +52,10 @@ export default class SigninPage extends Block {
 		const file = readFileSync(__dirname + '/signin.pug', 'utf8');
 
 		const html = pug.render(file, {
-			loginInput: (this.props.loginInput as Block).blockWithId(),
-			passwordInput: (this.props.passwordInput as Block).blockWithId(),
-			signInBtn: (this.props.signInBtn as Block).blockWithId(),
-			signUpBtn: (this.props.signUpBtn as Block).blockWithId(),
+			loginInput: this.loginInput.blockWithId(),
+			passwordInput: this.passwordInput.blockWithId(),
+			signInBtn: this.signInBtn.blockWithId(),
+			signUpBtn: this.signUpBtn.blockWithId(),
 		});
 
 		return html;

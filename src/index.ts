@@ -1,25 +1,17 @@
-import Block from './common/block';
-import IndexPage from './pages/index';
-import {compile} from './utils/compile';
+import './common.scss';
+import {Router} from './common/router';
+import Index from './pages/index';
+import Err404 from './pages/404';
+import Signin from './pages/signin';
+import Signup from './pages/signup';
 
-export default class Index extends Block {
-	constructor() {
-		super('div', {
-			indexPage: new IndexPage(),
-		});
-	}
-
-	render() {
-		const page = (this.props.indexPage as Block).blockWithId();
-
-		window.onload = () => {
-			compile(page);
-			(this.props.indexPage as Block)._render();
-		};
-
-		return page;
-	}
-}
-
-const index = new Index();
-index.render();
+window.onload = () => {
+	new Router()
+		.use('/messenger', Index)
+		.use('/settings', Index)
+		.use('/', Signin)
+		.use('/sign-up', Signup)
+		.use('/404', Err404)
+		.onNotFound(Err404)
+		.start();
+};

@@ -2,17 +2,14 @@ import Block from '../../../common/block';
 import * as pug from 'pug';
 import {readFileSync} from 'fs';
 import './styled-input.scss';
+import {Rule} from '../../../utils/rules';
 
 export default class StyledInput extends Block {
-	public value = '';
 	public valid = true;
 	private field: HTMLInputElement | undefined;
 
 	constructor(props: any) {
 		super('div', {...props});
-		if (this.props.value) {
-			this.value = (this.props.value as string);
-		}
 
 		this.focus = this.focus.bind(this);
 		this.blur = this.blur.bind(this);
@@ -20,16 +17,21 @@ export default class StyledInput extends Block {
 		this.validate = this.validate.bind(this);
 	}
 
-	validate(isBlur = false): boolean {
+	get value() {
+		return (this.props.value as string);
+	}
+
+	validate(blur = false): boolean {
 		if (this.props.rules && Array.isArray(this.props.rules)) {
-			const error = (this.props.rules as Array<{rule: RegExp; msg: string}>).find((rule: {rule: RegExp; msg: string}) => !rule.rule.test(this.value));
+			const error = (this.props.rules as Rule[]).find((rule: {rule: RegExp; msg: string}) => !rule.rule.test(this.props.value));
+			const currentPos = this.field?.selectionStart;
 
 			if (error) {
 				this.valid = false;
 				this.setProps({
 					...this.props,
 					valid: this.valid,
-					value: this.value,
+					value: (this.props.value as string) || '',
 					msg: error.msg,
 				});
 			} else {
@@ -37,13 +39,13 @@ export default class StyledInput extends Block {
 				this.setProps({
 					...this.props,
 					valid: this.valid,
-					value: this.value,
+					value: (this.props.value as string) || '',
 					msg: undefined,
 				});
 			}
 
-			if (!isBlur) {
-				this.field?.setSelectionRange(this.field?.value.length, this.field?.value.length);
+			if (currentPos && !blur) {
+				this.field?.setSelectionRange(currentPos, currentPos);
 				this.field?.focus();
 			}
 
@@ -62,7 +64,7 @@ export default class StyledInput extends Block {
 	}
 
 	input(e: Event) {
-		this.value = (e.target as HTMLInputElement).value;
+		this.props.value = (e.target as HTMLInputElement).value;
 		if (!this.valid) {
 			this.validate();
 		}
