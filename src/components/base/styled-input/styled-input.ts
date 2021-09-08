@@ -1,8 +1,7 @@
 import Block from '../../../common/block';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
-import './styled-input.scss';
 import {Rule} from '../../../utils/rules';
+import pages from '../../../pages';
 
 export default class StyledInput extends Block {
 	public valid = true;
@@ -79,8 +78,7 @@ export default class StyledInput extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/styled-input.pug', 'utf8');
-		const html = pug.render(file, {...this.props, valid: this.valid});
+		const html = pug.render(pages.styledInput, {...this.props, valid: this.valid});
 		return html;
 	}
 }

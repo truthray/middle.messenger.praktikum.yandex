@@ -2,7 +2,7 @@ import isEqual from '../utils/is-equal';
 import Block from './block';
 
 export class Route {
-	block: Block | undefined;
+	block: Block | undefined = undefined;
 	private params: string | number | undefined = undefined;
 
 	constructor(private pathname: string, private readonly BlockClass: new () => Block) {}

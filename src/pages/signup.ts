@@ -3,17 +3,17 @@ import {compile} from '../utils/compile';
 import SignupPage from './signup/signup';
 
 export default class Signup extends Block {
+	private readonly signupPage = new SignupPage();
 	constructor() {
-		super('div', {
-			signupPage: new SignupPage(),
-		});
+		super('div', {});
+		this.setProps({...this.props, signupPage: this.signupPage});
 	}
 
 	render() {
-		const page = (this.props.signupPage as Block).blockWithId();
+		const page = this.signupPage.blockWithId();
 
 		compile(page);
-		(this.props.signupPage as Block)._render();
+		this.signupPage._render();
 
 		return page;
 	}

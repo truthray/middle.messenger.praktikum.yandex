@@ -20,7 +20,4 @@
                     | !{messageAreas[index]}
                 if (message.user_id == userId)
                     | !{selfAvatar}
-            //- if (message.time.slice(0, 10) !== currentDate)
-                - currentDate = message.time.slice(0, 10)
-                .message-date #{message.time.slice(0, 10)}
     | !{newMessageArea}

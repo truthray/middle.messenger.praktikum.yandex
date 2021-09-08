@@ -1,7 +1,7 @@
 import './message.scss';
 import Block from '../../../common/block';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
+import pages from '../../../pages';
 
 export default class MessageArea extends Block {
 	constructor(props: any) {
@@ -9,8 +9,7 @@ export default class MessageArea extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/message.pug', 'utf8');
-		const html = pug.render(file, this.props);
+		const html = pug.render(pages.message, this.props);
 		return html;
 	}
 }

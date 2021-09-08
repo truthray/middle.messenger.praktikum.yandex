@@ -1,7 +1,7 @@
 import Block from '../../../common/block';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
 import './message-input.scss';
+import pages from '../../../pages';
 
 export default class MessageInput extends Block {
 	public value = '';
@@ -35,8 +35,7 @@ export default class MessageInput extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/message-input.pug', 'utf8');
-		const html = pug.render(file, {...this.props});
+		const html = pug.render(pages.messageInput, {...this.props});
 
 		return html;
 	}

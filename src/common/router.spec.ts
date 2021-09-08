@@ -1,5 +1,5 @@
 import {Route, Router, useRouter} from './router';
-import Index from '../pages';
+import Index from '../pages/index';
 import Signin from '../pages/signin';
 import Signup from '../pages/signup';
 import Err404 from '../pages/404';

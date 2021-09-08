@@ -6,7 +6,6 @@ import {person} from './../../data';
 import * as pug from 'pug';
 import Block from '../../common/block';
 import './index.scss';
-import {readFileSync} from 'fs';
 import ChatPerson from '../../components/chat-person/chat-person';
 import StyledControlBtn from '../../components/base/styled-control-btn/styled-control-btn';
 import StyledInput from '../../components/base/styled-input/styled-input';
@@ -14,6 +13,7 @@ import ChatArea from '../../components/chat-area/chat-area';
 import ProfileArea from '../../components/profile/profile';
 import {useWebSocket} from '../../api-client/websocket';
 import {useRouter} from '../../common/router';
+import pages from '../../pages';
 
 export default class IndexPage extends Block {
 	private active = 0;
@@ -97,9 +97,6 @@ export default class IndexPage extends Block {
 
 				this.props.userId = parsed.id;
 			}
-			// Else if ((user as XMLHttpRequest).status === 401) {
-			// useRouter()?.go('/');
-			// }
 		}).catch(e => {
 			console.log('error: ', e);
 		});
@@ -209,8 +206,7 @@ export default class IndexPage extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/index.pug', 'utf8');
-		const html = pug.render(file, {
+		const html = pug.render(pages.index, {
 			...this.props,
 			chatPerson: this.chatPerson.blockWithId(),
 			minusBtn: this.minusBtn.blockWithId(),

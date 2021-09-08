@@ -4,17 +4,17 @@ import Err404Page from './404/404';
 import '../common.scss';
 
 export default class Err404 extends Block {
+	private readonly errPage = new Err404Page();
 	constructor() {
-		super('div', {
-			errPage: new Err404Page(),
-		});
+		super('div', {});
+		this.setProps({...this.props, errPage: this.errPage});
 	}
 
 	render() {
-		const page = (this.props.errPage as Block).blockWithId();
+		const page = this.errPage.blockWithId();
 
 		compile(page);
-		(this.props.errPage as Block)._render();
+		this.errPage._render();
 
 		return page;
 	}

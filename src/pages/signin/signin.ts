@@ -4,9 +4,9 @@ import {useRouter} from './../../common/router';
 import * as pug from 'pug';
 import Block from '../../common/block';
 import './signin.scss';
-import {readFileSync} from 'fs';
 import StyledInput from '../../components/base/styled-input/styled-input';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
+import pages from '../../pages';
 
 export default class SigninPage extends Block {
 	private readonly loginInput = new StyledInput({label: 'Логин'});
@@ -49,9 +49,7 @@ export default class SigninPage extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/signin.pug', 'utf8');
-
-		const html = pug.render(file, {
+		const html = pug.render(pages.signin, {
 			loginInput: this.loginInput.blockWithId(),
 			passwordInput: this.passwordInput.blockWithId(),
 			signInBtn: this.signInBtn.blockWithId(),

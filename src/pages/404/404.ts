@@ -1,9 +1,9 @@
 import './404.scss';
 import * as pug from 'pug';
 import Block from '../../common/block';
-import {readFileSync} from 'fs';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
 import {useRouter} from '../../common/router';
+import pages from '../../pages';
 
 export default class Err404Page extends Block {
 	constructor() {
@@ -17,9 +17,7 @@ export default class Err404Page extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/404.pug', 'utf8');
-
-		const html = pug.render(file, {
+		const html = pug.render(pages.page404, {
 			backToMainBtn: (this.props.backToMainBtn as Block).blockWithId(),
 		});
 

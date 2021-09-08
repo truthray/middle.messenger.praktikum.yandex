@@ -6,9 +6,9 @@ import * as pug from 'pug';
 import Block from '../../common/block';
 import './signup.scss';
 import {compile} from '../../utils/compile';
-import {readFileSync} from 'fs';
 import StyledInput from '../../components/base/styled-input/styled-input';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
+import pages from '../../pages';
 
 export default class SignupPage extends Block {
 	private readonly emailInput = new StyledInput({label: 'Email', rules: [{rule: emailRule, msg: 'Email должен соответствовать шаблону'}]});
@@ -69,8 +69,7 @@ export default class SignupPage extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/signup.pug', 'utf8');
-		const html = pug.render(file, {
+		const html = pug.render(pages.signup, {
 			emailInput: this.emailInput.blockWithId(),
 			loginInput: this.loginInput.blockWithId(),
 			phoneInput: this.phoneInput.blockWithId(),

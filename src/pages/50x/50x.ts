@@ -2,7 +2,6 @@ import {useRouter} from './../../common/router';
 import './50x.scss';
 import * as pug from 'pug';
 import Block from '../../common/block';
-import {readFileSync} from 'fs';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
 
 export default class Err50xPage extends Block {
@@ -17,9 +16,7 @@ export default class Err50xPage extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/50x.pug', 'utf8');
-
-		const html = pug.render(file, {
+		const html = pug.render(__dirname + '/50x.pug', {
 			backToMainBtn: (this.props.backToMainBtn as Block).blockWithId(),
 		});
 
