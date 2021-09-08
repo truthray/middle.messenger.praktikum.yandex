@@ -151,7 +151,6 @@ export default class ProfileArea extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/profile.pug', 'utf8');
 		const html = pug.render(pages.profile, {
 			...this.props,
 			avatar: this.avatar.blockWithId(),

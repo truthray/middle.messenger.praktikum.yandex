@@ -69,7 +69,6 @@ export default class SignupPage extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/signup.pug', 'utf8');
 		const html = pug.render(pages.signup, {
 			emailInput: this.emailInput.blockWithId(),
 			loginInput: this.loginInput.blockWithId(),

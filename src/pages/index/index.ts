@@ -97,9 +97,6 @@ export default class IndexPage extends Block {
 
 				this.props.userId = parsed.id;
 			}
-			// Else if ((user as XMLHttpRequest).status === 401) {
-			// useRouter()?.go('/');
-			// }
 		}).catch(e => {
 			console.log('error: ', e);
 		});
@@ -209,7 +206,6 @@ export default class IndexPage extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/index.pug', 'utf8');
 		const html = pug.render(pages.index, {
 			...this.props,
 			chatPerson: this.chatPerson.blockWithId(),

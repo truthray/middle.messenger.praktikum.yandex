@@ -10,13 +10,6 @@ export default class StyledBtn extends Block {
 		this.validate = this.validate.bind(this);
 	}
 
-	componentDidMount() {
-		// If (this.props.type) {
-		// const btn = this.getContent()?.getElementsByTagName('button')[0];
-		// btn?.addEventListener('click', this.validate);
-		// }
-	}
-
 	validate(): boolean {
 		if (this.props.fields) {
 			for (const field of this.props.fields) {
@@ -33,7 +26,6 @@ export default class StyledBtn extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/styled-btn.pug', 'utf8');
 		const html = pug.render(pages.styledBtn, this.props);
 		return html;
 	}

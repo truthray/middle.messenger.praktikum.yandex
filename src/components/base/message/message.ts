@@ -9,7 +9,6 @@ export default class MessageArea extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/message.pug', 'utf8');
 		const html = pug.render(pages.message, this.props);
 		return html;
 	}

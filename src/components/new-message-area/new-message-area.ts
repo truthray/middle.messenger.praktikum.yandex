@@ -36,7 +36,6 @@ export default class NewMessageArea extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/new-message-area.pug', 'utf8');
 		const html = pug.render(pages.newMessageArea, {
 			...this.props,
 			addFileBtn: this.addFileBtn.blockWithId(),

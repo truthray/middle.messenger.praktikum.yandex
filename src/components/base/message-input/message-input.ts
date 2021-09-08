@@ -35,7 +35,6 @@ export default class MessageInput extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/message-input.pug', 'utf8');
 		const html = pug.render(pages.messageInput, {...this.props});
 
 		return html;

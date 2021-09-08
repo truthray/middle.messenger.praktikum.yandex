@@ -9,7 +9,6 @@ export default class Avatar extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/avatar.pug', 'utf8');
 		const html = pug.render(pages.avatar, this.props);
 		return html;
 	}

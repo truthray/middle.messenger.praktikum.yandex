@@ -9,7 +9,6 @@ export default class StyledControlBtn extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/styled-control-btn.pug', 'utf8');
 		const html = pug.render(pages.styledControlBtn, this.props);
 		return html;
 	}

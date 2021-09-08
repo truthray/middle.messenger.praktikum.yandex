@@ -49,8 +49,6 @@ export default class SigninPage extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/signin.pug', 'utf8');
-
 		const html = pug.render(pages.signin, {
 			loginInput: this.loginInput.blockWithId(),
 			passwordInput: this.passwordInput.blockWithId(),

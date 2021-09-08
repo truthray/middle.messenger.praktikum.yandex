@@ -105,7 +105,6 @@ export default class ChatArea extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/chat-area.pug', 'utf8');
 		const html = pug.render(pages.chatArea, {
 			...this.props,
 			avatar: this.avatar.blockWithId(),

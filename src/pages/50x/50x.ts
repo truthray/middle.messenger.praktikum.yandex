@@ -16,8 +16,6 @@ export default class Err50xPage extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/50x.pug', 'utf8');
-
 		const html = pug.render(__dirname + '/50x.pug', {
 			backToMainBtn: (this.props.backToMainBtn as Block).blockWithId(),
 		});

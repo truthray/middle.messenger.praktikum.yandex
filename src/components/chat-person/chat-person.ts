@@ -25,7 +25,6 @@ export default class ChatPerson extends Block {
 		});
 		this.setProps({...this.props, avatar: this.avatar, plusBtn: this.plusBtn, unreadBtn: this.unreadBtn});
 		this.avatarHandler = this.avatarHandler.bind(this);
-		// (this.props.avatar as Block).setProps({...(this.props.avatar as Block).props, url: `https://ya-praktikum.tech/api/v2/resources/${(this.props.chat as Chat).avatar}`});
 		this.unreadBtn.setProps({...this.unreadBtn.props, label: (this.props.chat as Chat)?.unread_count});
 	}
 
@@ -60,7 +59,6 @@ export default class ChatPerson extends Block {
 	}
 
 	render() {
-		// Const file = readFileSync(__dirname + '/chat-person.pug', 'utf8');
 		const html = pug.render(pages.chatPerson, {
 			...this.props,
 			avatar: this.avatar.blockWithId(),
