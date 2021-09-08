@@ -7,12 +7,12 @@ import './profile.scss';
 import * as pug from 'pug';
 import Block from '../../common/block';
 import {compile} from '../../utils/compile';
-import {readFileSync} from 'fs';
 import StyledInput from '../../components/base/styled-input/styled-input';
 import StyledBtn from '../../components/base/styled-btn/styled-btn';
 import {emailRule, sixSymbolsRule} from '../../utils/rules';
 import Avatar from '../base/avatar/avatar';
 import {toBase64} from '../../utils/toBase64';
+import pages from '../../pages';
 
 export default class ProfileArea extends Block {
 	private readonly avatar = new Avatar({large: true, events: {click: () => {
@@ -151,8 +151,8 @@ export default class ProfileArea extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/profile.pug', 'utf8');
-		const html = pug.render(file, {
+		// Const file = readFileSync(__dirname + '/profile.pug', 'utf8');
+		const html = pug.render(pages.profile, {
 			...this.props,
 			avatar: this.avatar.blockWithId(),
 			emailInput: this.emailInput.blockWithId(),

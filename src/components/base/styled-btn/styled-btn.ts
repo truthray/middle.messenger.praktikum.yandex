@@ -1,8 +1,8 @@
 import Block from '../../../common/block';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
 import './styled-btn.scss';
 import StyledInput from '../styled-input/styled-input';
+import pages from '../../../pages';
 
 export default class StyledBtn extends Block {
 	constructor(props: any) {
@@ -33,8 +33,8 @@ export default class StyledBtn extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/styled-btn.pug', 'utf8');
-		const html = pug.render(file, this.props);
+		// Const file = readFileSync(__dirname + '/styled-btn.pug', 'utf8');
+		const html = pug.render(pages.styledBtn, this.props);
 		return html;
 	}
 }

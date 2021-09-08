@@ -1,10 +1,10 @@
 import './new-message-area.scss';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
 import Block from '../../common/block';
 import StyledControlBtn from '../base/styled-control-btn/styled-control-btn';
 import StyledBtn from '../base/styled-btn/styled-btn';
 import MessageInput from '../base/message-input/message-input';
+import pages from '../../pages';
 
 export default class NewMessageArea extends Block {
 	private readonly addFileBtn = new StyledControlBtn({label: '+', events: {click: () => {
@@ -36,8 +36,8 @@ export default class NewMessageArea extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/new-message-area.pug', 'utf8');
-		const html = pug.render(file, {
+		// Const file = readFileSync(__dirname + '/new-message-area.pug', 'utf8');
+		const html = pug.render(pages.newMessageArea, {
 			...this.props,
 			addFileBtn: this.addFileBtn.blockWithId(),
 			sendBtn: this.sendBtn.blockWithId(),

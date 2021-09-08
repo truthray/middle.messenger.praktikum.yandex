@@ -1,7 +1,7 @@
 import './avatar.scss';
 import Block from '../../../common/block';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
+import pages from '../../../pages';
 
 export default class Avatar extends Block {
 	constructor(props: any) {
@@ -9,8 +9,8 @@ export default class Avatar extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/avatar.pug', 'utf8');
-		const html = pug.render(file, this.props);
+		// Const file = readFileSync(__dirname + '/avatar.pug', 'utf8');
+		const html = pug.render(pages.avatar, this.props);
 		return html;
 	}
 }

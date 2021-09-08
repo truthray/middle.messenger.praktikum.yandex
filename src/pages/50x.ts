@@ -4,17 +4,17 @@ import Err50xPage from './50x/50x';
 import '../common.scss';
 
 export default class Err50x extends Block {
+	private readonly errPage = new Err50xPage();
 	constructor() {
-		super('div', {
-			errPage: new Err50xPage(),
-		});
+		super('div', {});
+		this.setProps({...this.props, errPage: this.errPage});
 	}
 
 	render() {
-		const page = (this.props.errPage as Block).blockWithId();
+		const page = this.errPage.blockWithId();
 
 		compile(page);
-		(this.props.errPage as Block)._render();
+		this.errPage._render();
 
 		return page;
 	}

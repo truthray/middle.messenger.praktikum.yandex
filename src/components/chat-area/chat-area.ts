@@ -3,13 +3,13 @@ import {UserDto} from './../../models/user';
 import {ChatApi} from './../../api/chat-api';
 import './chat-area.scss';
 import * as pug from 'pug';
-import {readFileSync} from 'fs';
 import Block from '../../common/block';
 import Avatar from '../base/avatar/avatar';
 import MessageArea from '../base/message/message';
 import NewMessageArea from '../new-message-area/new-message-area';
 import StyledControlBtn from '../base/styled-control-btn/styled-control-btn';
 import StyledInput from '../base/styled-input/styled-input';
+import pages from '../../pages';
 
 export default class ChatArea extends Block {
 	private readonly avatar = new Avatar({});
@@ -105,8 +105,8 @@ export default class ChatArea extends Block {
 	}
 
 	render() {
-		const file = readFileSync(__dirname + '/chat-area.pug', 'utf8');
-		const html = pug.render(file, {
+		// Const file = readFileSync(__dirname + '/chat-area.pug', 'utf8');
+		const html = pug.render(pages.chatArea, {
 			...this.props,
 			avatar: this.avatar.blockWithId(),
 			newMessageArea: this.newMessageArea.blockWithId(),
